@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/feed', pathMatch: 'full' },
   {path: 'feed', component: FeedComponent},
   { path: 'login', component: LoginComponent },
-  { path: 'deathTreats', component: DeathThreatsComponent },
+  { path: 'deathThreats', component: DeathThreatsComponent },
   {
     path: 'admin',
     component: AdminComponent,

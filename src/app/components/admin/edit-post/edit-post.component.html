@@ -1,7 +1,4 @@
 <div>
-  @if (loading) {
-    <h1>LOADING</h1>
-  }
   @if (!selectedPost) {
     @for (post of posts; track $index) {
       <div>
