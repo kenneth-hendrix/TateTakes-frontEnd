@@ -1,4 +1,4 @@
-<app-header buttonType="none" [showAdmin]="false"></app-header>
+<app-header [hideButtons]="true"></app-header>
 <h2>Login</h2>
 
 <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -10,8 +10,5 @@
     <label for="password">Password:</label>
     <input id="password" formControlName="password" type="password">
   </div>
-  @if (errorMessage) {
-    <div class="error">{{ errorMessage }}</div>
-  }
   <button type="submit" [disabled]="!loginForm.valid">Log In</button>
   </form>

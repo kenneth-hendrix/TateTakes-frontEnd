@@ -1,8 +1,8 @@
-import { FeedService } from './../../services/feed.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/authentication.service';
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -12,28 +12,27 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) buttonType!: 'none' | 'login' | 'logout';
-  @Input() showAdmin: boolean = true;
+  @Input() hideButtons: boolean = false;
+  @Input() hideAdmin: boolean = false;
 
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastr = inject(ToastrService);
 
-  showAuth: boolean = false;
+  isAuthenticated: boolean = false;
 
   private $destroy = new Subject<void>();
 
   ngOnInit(): void {
-    this.authService.isAuthenticated.pipe(
-      takeUntil(this.$destroy)
-    ).subscribe(
-      (value) => {
+    this.authService.isAuthenticated
+      .pipe(takeUntil(this.$destroy))
+      .subscribe((value) => {
         if (value) {
-          this.showAuth = this.showAdmin;
+          this.isAuthenticated = true;
         } else {
-          this.showAuth = false;
+          this.isAuthenticated = false;
         }
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
@@ -46,9 +45,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .logout()
       .then(() => {
         this.router.navigate(['/feed']);
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
+        this.toastr.error('Please try again later', 'Something went wrong');
       });
   }
 

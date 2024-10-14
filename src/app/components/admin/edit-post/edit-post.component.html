@@ -20,11 +20,7 @@
         <label for="body">Body:</label>
         <input id="body" formControlName="body" type="body">
       </div>
-      @if (errorMessage) {
-        <div class="error">{{ errorMessage }}</div>
-      }
       <button type="submit" [disabled]="!postForm.valid">Submit</button>
     </form>
   }
-  <p>{{errorMessage}}</p>
 </div>

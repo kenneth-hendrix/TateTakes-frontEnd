@@ -2,13 +2,13 @@
   <a class="logo" (click)="goHome()">Tate Blog</a>
   <div class="header-right">
     <a class="active">Send Death Threats to Author</a>
-    @if (showAuth) {
+    @if (isAuthenticated && !hideAdmin && !hideButtons) {
       <a class="active" (click)="admin()">Admin</a>
     }
-    @if (buttonType === 'logout') {
+    @if (isAuthenticated && !hideButtons) {
       <a class="active" (click)="logout()">Log Out</a>
     }
-    @else if (buttonType === 'login') {
+    @else if (!isAuthenticated && !hideButtons) {
       <a class="active" (click)="login()">Log In</a>
     }
   </div>

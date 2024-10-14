@@ -4,6 +4,7 @@ import { take } from 'rxjs';
 import { Post } from '../../../models/post.model';
 import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-post',
@@ -15,10 +16,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class EditPostComponent implements OnInit {
   private feedService = inject(FeedService);
   private fb = inject(FormBuilder);
+  private toastr = inject(ToastrService);
 
   loading: boolean = false;
   posts: Post[] = [];
-  errorMessage: string = '';
   selectedPost: Post | undefined = undefined;
   postForm: FormGroup;
 
@@ -41,7 +42,8 @@ export class EditPostComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          this.errorMessage = error.message;
+          console.error(error);
+          this.toastr.error('Please try again later', 'Something went wrong');
         },
       });
   }
@@ -53,7 +55,6 @@ export class EditPostComponent implements OnInit {
   }
 
   submitEditPost() {
-    this.errorMessage = '';
     if (this.postForm.valid && this.selectedPost?.id) {
       const { title, body } = this.postForm.value;
       let post: Post = {
@@ -70,9 +71,14 @@ export class EditPostComponent implements OnInit {
           }
         });
         this.selectedPost = undefined;
+        this.toastr.success('Successfully edited post', 'Success');
+      }).catch(error => {
+        console.error(error);
+        this.toastr.error('Please try again later', 'Something went wrong');
       });
     } else {
-      this.errorMessage = "Post has no ID. Tell Jack";
+      console.error("Post has no ID");
+      this.toastr.error('Please try again later', 'Something went wrong');
     }
   }
 }
