@@ -1,7 +1,15 @@
-<h1>Tate Blog</h1>
-@if (buttonType === 'logout') {
-  <button (click)="logout()">Log Out</button>
-}
-@else if (buttonType === 'login') {
-  <button (click)="login()">Log In</button>
-}
+<div class="header">
+  <a class="logo" (click)="goHome()">Tate Blog</a>
+  <div class="header-right">
+    <a class="active">Send Death Threats to Author</a>
+    @if (showAuth) {
+      <a class="active" (click)="admin()">Admin</a>
+    }
+    @if (buttonType === 'logout') {
+      <a class="active" (click)="logout()">Log Out</a>
+    }
+    @else if (buttonType === 'login') {
+      <a class="active" (click)="login()">Log In</a>
+    }
+  </div>
+</div>

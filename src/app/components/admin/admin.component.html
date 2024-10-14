@@ -1,2 +1,17 @@
-<p>admin works!</p>
-<app-header buttonType="logout"></app-header>
+<app-header buttonType="logout" [showAdmin]="false"></app-header>
+<div>
+  <a (click)="toggleNewPost()">New Post</a>
+  @if (newPostOpen) {
+    <app-new-post></app-new-post>
+  }
+  <br>
+  <a (click)="toggleEdit()">Edit Post</a>
+  @if (editOpen) {
+    <app-edit-post></app-edit-post>
+  }
+  <br>
+  <a (click)="toggleDelete()">Delete Post</a>
+  @if (deleteOpen) {
+    <app-delete-post></app-delete-post>
+  }
+</div>

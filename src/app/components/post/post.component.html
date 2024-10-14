@@ -1,0 +1,16 @@
+<div class="card">
+  <h1>
+    {{post.title}}
+  </h1>
+  <hr>
+  <div class="container">
+    <p>
+      {{post.date | timestampToDate:'date-only'}}
+    </p>
+    <p>
+      {{post.body}}
+    </p>
+  </div>
+  <hr>
+  <app-comments></app-comments>
+</div>
