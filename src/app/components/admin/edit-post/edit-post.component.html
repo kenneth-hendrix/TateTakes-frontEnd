@@ -1,0 +1,30 @@
+<div>
+  @if (loading) {
+    <h1>LOADING</h1>
+  }
+  @if (!selectedPost) {
+    @for (post of posts; track $index) {
+      <div>
+        <span>{{post.title}} {{post.date | timestampToDate}} </span>
+        <a (click)="selectPost(post)">Edit Post</a>
+      </div>
+    }
+  }
+  @else {
+    <form [formGroup]="postForm" (ngSubmit)="submitEditPost()">
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" formControlName="title" type="title">
+      </div>
+      <div>
+        <label for="body">Body:</label>
+        <input id="body" formControlName="body" type="body">
+      </div>
+      @if (errorMessage) {
+        <div class="error">{{ errorMessage }}</div>
+      }
+      <button type="submit" [disabled]="!postForm.valid">Submit</button>
+    </form>
+  }
+  <p>{{errorMessage}}</p>
+</div>

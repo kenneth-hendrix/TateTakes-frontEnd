@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
+import { map, Observable, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,16 @@ export class AuthService {
     return this.afAuth.signOut()
   }
 
-  get isAuthenticated(): boolean {
-    return this.afAuth.currentUser !== null;
+  get isAuthenticated(): Observable<boolean> {
+    return this.afAuth.authState.pipe(
+      take(1),
+      map((user) => {
+        if (user) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
   }
 }

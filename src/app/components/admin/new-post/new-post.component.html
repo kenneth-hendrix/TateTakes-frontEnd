@@ -1,0 +1,14 @@
+<form [formGroup]="postForm" (ngSubmit)="submitNewPost()">
+  <div>
+    <label for="title">Title:</label>
+    <input id="title" formControlName="title" type="title">
+  </div>
+  <div>
+    <label for="body">Body:</label>
+    <input id="body" formControlName="body" type="body">
+  </div>
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+  <button type="submit" [disabled]="!postForm.valid">Submit</button>
+</form>

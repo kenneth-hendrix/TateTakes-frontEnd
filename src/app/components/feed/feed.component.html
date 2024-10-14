@@ -1,2 +1,5 @@
-<app-header buttonType="login"></app-header>
-<p>feed works!</p>
+<app-header [buttonType]="buttonType"></app-header>
+
+@for (post of feed; track $index) {
+  <app-post [post]="post"></app-post>
+}
