@@ -1,5 +1,12 @@
-<app-header [buttonType]="buttonType"></app-header>
+<app-header></app-header>
 
 @for (post of feed; track $index) {
   <app-post [post]="post"></app-post>
 }
+
+@if (somethingWentWrong) {
+  <h1>Something went wrong</h1>
+  <a>Please, try again</a>
+}
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

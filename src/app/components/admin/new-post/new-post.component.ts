@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeedService } from '../../../services/feed.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-post',
@@ -11,10 +12,10 @@ import { FeedService } from '../../../services/feed.service';
 })
 export class NewPostComponent {
   postForm: FormGroup;
-  errorMessage: string = '';
 
   private fb = inject(FormBuilder);
   private feedService = inject(FeedService);
+  private toastr = inject(ToastrService);
 
   constructor() {
     this.postForm = this.fb.group({
@@ -24,11 +25,14 @@ export class NewPostComponent {
   }
 
   submitNewPost() {
-    this.errorMessage = '';
     if (this.postForm.valid) {
       const { title, body } = this.postForm.value;
       this.feedService.newPost(title, body).then(() => {
         this.postForm.reset();
+        this.toastr.success(`Your post, ${title}, has been published succesfully`, 'Success');
+      }).catch(error => {
+        console.error(error);
+        this.toastr.error('Please try again later', 'Something went wrong');
       });
     }
   }
