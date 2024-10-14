@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HeaderComponent } from "../header/header.component";
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private spinner = inject(NgxSpinnerService);
 
   loginForm: FormGroup;
 
@@ -51,23 +53,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
+    this.spinner.show();
     if (!this.isAuthenticated) {
       if (this.loginForm.valid) {
         const { email, password } = this.loginForm.value;
         this.authService
           .login(email, password)
           .then(() => {
+            this.spinner.hide();
             this.router.navigate(['/admin']);
           })
           .catch((error) => {
+            this.spinner.hide();
             console.error(error);
-            this.toastr.error(
-              'Please try again later',
-              'Something went wrong'
-            );
+            this.toastr.error('Please try again later', 'Something went wrong');
           });
       }
     } else {
+      this.spinner.hide();
       this.toastr.error('You are already logged in', 'Something went wrong');
     }
   }

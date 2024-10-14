@@ -4,6 +4,7 @@ import { take } from 'rxjs';
 import { Post } from '../../../models/post.model';
 import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-delete-post',
@@ -15,19 +16,19 @@ import { ToastrService } from 'ngx-toastr';
 export class DeletePostComponent implements OnInit {
   private feedService = inject(FeedService);
   private toastr = inject(ToastrService);
+  private spinner = inject(NgxSpinnerService);
 
   posts: Post[] = [];
-  loading: boolean = false;
 
   ngOnInit(): void {
-    this.loading = true;
+    this.spinner.show();
     this.feedService.getFeed().pipe(take(1)).subscribe({
       next: (resp: Post[]) => {
         this.posts = resp;
-        this.loading = false;
+        this.spinner.hide();
       },
       error: (error) => {
-        this.loading = false;
+        this.spinner.hide();
         console.error(error);
         this.toastr.error('Please try again later', 'Something went wrong');
       }
@@ -35,22 +36,22 @@ export class DeletePostComponent implements OnInit {
   }
 
   deletePost(id: string): void {
-    this.loading = true;
+    this.spinner.show();
     if (id) {
       let temp = [...this.posts];
       this.posts = this.posts.filter((post) => post.id !== id);
       this.feedService.deletePost(id).then(() => {
-        this.loading = false;
+        this.spinner.hide();
         this.toastr.success('Successfully deleted post', 'Success');
       }).catch((error) => {
         console.error(error);
         this.toastr.error('Please try again later', 'Something went wrong');
-        this.loading = false;
+        this.spinner.hide();
         this.posts = temp;
       });
     } else {
       console.error('Post has no Id.');
-      this.loading = false;
+      this.spinner.hide();
       this.toastr.error('Please try again later', 'Something went wrong');
     }
   }

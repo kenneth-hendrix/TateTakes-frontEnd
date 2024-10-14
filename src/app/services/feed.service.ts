@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Post } from '../models/post.model';
 import {
   Firestore,
@@ -11,7 +9,7 @@ import {
   updateDoc,
   deleteDoc,
 } from '@angular/fire/firestore';
-import { collection, DocumentData } from '@firebase/firestore';
+import { collection } from '@firebase/firestore';
 
 @Injectable({
   providedIn: 'root',

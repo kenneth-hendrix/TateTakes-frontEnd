@@ -1,1 +1,8 @@
-<p>death-threats works!</p>
+<app-header [hideThreats]="true"></app-header>
+<form [formGroup]="threatForm" (ngSubmit)="submitNewThreat()">
+  <div>
+    <label for="message">Death Threat:</label>
+    <input id="message" formControlName="message" type="message">
+  </div>
+  <button type="submit" [disabled]="!threatForm.valid">Submit</button>
+</form>

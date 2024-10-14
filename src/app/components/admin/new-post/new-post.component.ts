@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeedService } from '../../../services/feed.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-new-post',
@@ -16,6 +17,7 @@ export class NewPostComponent {
   private fb = inject(FormBuilder);
   private feedService = inject(FeedService);
   private toastr = inject(ToastrService);
+  private spinner = inject(NgxSpinnerService);
 
   constructor() {
     this.postForm = this.fb.group({
@@ -26,14 +28,23 @@ export class NewPostComponent {
 
   submitNewPost() {
     if (this.postForm.valid) {
+      this.spinner.show();
       const { title, body } = this.postForm.value;
-      this.feedService.newPost(title, body).then(() => {
-        this.postForm.reset();
-        this.toastr.success(`Your post, ${title}, has been published succesfully`, 'Success');
-      }).catch(error => {
-        console.error(error);
-        this.toastr.error('Please try again later', 'Something went wrong');
-      });
+      this.feedService
+        .newPost(title, body)
+        .then(() => {
+          this.spinner.hide();
+          this.postForm.reset();
+          this.toastr.success(
+            `Your post, ${title}, has been published succesfully`,
+            'Success'
+          );
+        })
+        .catch((error) => {
+          this.spinner.hide();
+          console.error(error);
+          this.toastr.error('Please try again later', 'Something went wrong');
+        });
     }
   }
 }

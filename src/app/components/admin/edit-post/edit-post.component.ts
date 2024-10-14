@@ -5,6 +5,7 @@ import { Post } from '../../../models/post.model';
 import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-edit-post',
@@ -17,8 +18,8 @@ export class EditPostComponent implements OnInit {
   private feedService = inject(FeedService);
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private spinner = inject(NgxSpinnerService);
 
-  loading: boolean = false;
   posts: Post[] = [];
   selectedPost: Post | undefined = undefined;
   postForm: FormGroup;
@@ -31,17 +32,17 @@ export class EditPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
+    this.spinner.show();
     this.feedService
       .getFeed()
       .pipe(take(1))
       .subscribe({
         next: (resp: Post[]) => {
           this.posts = resp;
-          this.loading = false;
+          this.spinner.hide();
         },
         error: (error) => {
-          this.loading = false;
+          this.spinner.hide();
           console.error(error);
           this.toastr.error('Please try again later', 'Something went wrong');
         },
@@ -56,28 +57,34 @@ export class EditPostComponent implements OnInit {
 
   submitEditPost() {
     if (this.postForm.valid && this.selectedPost?.id) {
+      this.spinner.show();
       const { title, body } = this.postForm.value;
       let post: Post = {
         body: body,
         title: title,
         date: this.selectedPost?.date,
-      }
-      this.feedService.updatePost(this.selectedPost.id, post).then(() => {
-        this.postForm.reset();
-        this.posts.forEach(post => {
-          if (post.id === this.selectedPost?.id) {
-            post.body = body;
-            post.title = title;
-          }
+      };
+      this.feedService
+        .updatePost(this.selectedPost.id, post)
+        .then(() => {
+          this.spinner.hide();
+          this.postForm.reset();
+          this.posts.forEach((post) => {
+            if (post.id === this.selectedPost?.id) {
+              post.body = body;
+              post.title = title;
+            }
+          });
+          this.selectedPost = undefined;
+          this.toastr.success('Successfully edited post', 'Success');
+        })
+        .catch((error) => {
+          this.spinner.hide();
+          console.error(error);
+          this.toastr.error('Please try again later', 'Something went wrong');
         });
-        this.selectedPost = undefined;
-        this.toastr.success('Successfully edited post', 'Success');
-      }).catch(error => {
-        console.error(error);
-        this.toastr.error('Please try again later', 'Something went wrong');
-      });
     } else {
-      console.error("Post has no ID");
+      console.error('Post has no ID');
       this.toastr.error('Please try again later', 'Something went wrong');
     }
   }

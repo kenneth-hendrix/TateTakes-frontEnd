@@ -14,4 +14,9 @@
   @if (deleteOpen) {
     <app-delete-post></app-delete-post>
   }
+  <br>
+  <a (click)="toggleThreats()">View Threats</a>
+  @if (threatsOpen) {
+    <app-view-threats></app-view-threats>
+  }
 </div>
