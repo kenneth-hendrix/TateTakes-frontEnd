@@ -10,6 +10,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 
@@ -30,6 +31,6 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
     }),
     provideAnimations(),
-    NgxSpinnerService,
+    NgxSpinnerService, provideAnimationsAsync(),
   ],
 };

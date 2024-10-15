@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FeedService } from '../../../services/feed.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-new-post',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TextFieldModule],
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.scss',
 })
