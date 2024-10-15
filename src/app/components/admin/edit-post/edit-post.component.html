@@ -2,7 +2,11 @@
   @if (!selectedPost) {
     @for (post of posts; track $index) {
       <div>
-        <span>{{post.title}} {{post.date | timestampToDate}} </span>
+        @if (post.title.length < 50) {
+          <span>{{post.title}} {{post.date | timestampToDate}} </span>
+        } @else {
+          <span>{{post.title.slice(0, 50)}}... {{post.date | timestampToDate}} </span>
+        }
         <a (click)="selectPost(post)">Edit Post</a>
       </div>
     }
@@ -15,7 +19,7 @@
       </div>
       <div>
         <label for="body">Body:</label>
-        <input id="body" formControlName="body" type="body">
+        <textarea id="body" formControlName="body" type="body"></textarea>
       </div>
       <button type="submit" [disabled]="!postForm.valid">Submit</button>
     </form>

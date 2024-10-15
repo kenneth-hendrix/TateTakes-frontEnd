@@ -1,7 +1,11 @@
 <app-header></app-header>
 
-@for (post of feed; track $index) {
-  <app-post [post]="post"></app-post>
+@if (!expandedPost) {
+  @for (post of feed; track $index) {
+    <app-post [post]="post" (expandPost)="expandPost(post)"></app-post>
+  }
+} @else {
+  <app-expanded-post [post]="expandedPost" (back)="goBack()"></app-expanded-post>
 }
 
 @if (somethingWentWrong) {

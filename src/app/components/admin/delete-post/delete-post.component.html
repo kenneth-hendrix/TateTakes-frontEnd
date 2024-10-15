@@ -1,7 +1,11 @@
 <div>
   @for (post of posts; track $index) {
     <div>
-      <span>{{post.title}} {{post.date | timestampToDate}} </span>
+      @if (post.title.length < 50) {
+        <span>{{post.title}} {{post.date | timestampToDate}} </span>
+      } @else {
+        <span>{{post.title.slice(0, 50)}}... {{post.date | timestampToDate}} </span>
+      }
       <a (click)="deletePost(post.id || '')">Delete Post</a>
     </div>
   }
