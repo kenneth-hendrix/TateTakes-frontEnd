@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Threat } from '../models/threat.model';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, Firestore, orderBy, query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { collectionData } from '@angular/fire/firestore';
 
@@ -21,6 +21,7 @@ export class DeathThreatService {
 
   getThreats(): Observable<Threat[]> {
     const postsRef = collection(this.firestore, 'threats');
-    return collectionData(postsRef, { idField: 'id' }) as Observable<Threat[]>;
+    const sortedQuery = query(postsRef, orderBy('date', 'desc'));
+    return collectionData(sortedQuery, { idField: 'id' }) as Observable<Threat[]>;
   }
 }

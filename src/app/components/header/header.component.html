@@ -132,14 +132,14 @@
       @if (isAuthenticated && !hideAdmin && !hideButtons) {
       <a class="active" (click)="admin()">Admin</a>
       } @else if (isAuthenticated && hideAdmin && !hideButtons) {
-        <p class="current">Admin</p>
+        <a class="current">Admin</a>
       }
       @if (isAuthenticated && !hideButtons) {
       <a class="active" (click)="logout()">Log Out</a>
       } @else if (!isAuthenticated && !hideButtons) {
       <a class="active" (click)="login()">Log In</a>
       } @else if (!isAuthenticated && hideButtons) {
-        <p class="current">Log In</p>
+        <a class="current">Log In</a>
       }
     </div>
   </div>

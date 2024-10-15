@@ -7,12 +7,10 @@
   </p>
   <hr>
   <div class="container">
-    <p>
-      {{textToShow}}&nbsp;
-      @if (post.body.length > 700) {
-        <a class="readMore" (click)="expand()">Read More</a>
-      }
-    </p>
+    <span [innerHTML]="textToShow"></span>
+    @if (post.body.length > 700) {
+      <a class="readMore" (click)="expand()"> Read More</a>
+    }
   </div>
   <hr>
   <a (click)="showComments()">Comments...</a>

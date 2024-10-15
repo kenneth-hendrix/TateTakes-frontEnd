@@ -8,6 +8,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  query,
+  orderBy,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 
@@ -19,7 +21,8 @@ export class FeedService {
 
   getFeed(): Observable<Post[]> {
     const postsRef = collection(this.firestore, 'posts');
-    return collectionData(postsRef, { idField: 'id' }) as Observable<Post[]>;
+    const sortedQuery = query(postsRef, orderBy('date', 'desc'));
+    return collectionData(sortedQuery, { idField: 'id' }) as Observable<Post[]>;
   }
 
   newPost(title: string, body: string): Promise<any> {

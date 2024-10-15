@@ -30,8 +30,9 @@ export class NewPostComponent {
     if (this.postForm.valid) {
       this.spinner.show();
       const { title, body } = this.postForm.value;
+      const formattedText = body.replace(/\n/g, '<br>');
       this.feedService
-        .newPost(title, body)
+        .newPost(title, formattedText)
         .then(() => {
           this.spinner.hide();
           this.postForm.reset();
