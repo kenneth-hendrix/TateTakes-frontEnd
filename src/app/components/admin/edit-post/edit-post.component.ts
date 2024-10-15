@@ -59,8 +59,9 @@ export class EditPostComponent implements OnInit {
     if (this.postForm.valid && this.selectedPost?.id) {
       this.spinner.show();
       const { title, body } = this.postForm.value;
+      const formattedText = body.replace(/\n/g, '<br>');
       let post: Post = {
-        body: body,
+        body: formattedText,
         title: title,
         date: this.selectedPost?.date,
       };
@@ -71,7 +72,7 @@ export class EditPostComponent implements OnInit {
           this.postForm.reset();
           this.posts.forEach((post) => {
             if (post.id === this.selectedPost?.id) {
-              post.body = body;
+              post.body = formattedText;
               post.title = title;
             }
           });
