@@ -1,0 +1,33 @@
+<div class="card">
+  <a (click)="goBack();">&lt; Back</a>
+  <h1 class="title">
+    {{post.title}}
+  </h1>
+  <p class="date">
+    {{post.date | timestampToDate:'date-only'}}
+  </p>
+  <hr>
+  <div class="container">
+    <p>
+      {{post.body}}
+    </p>
+  </div>
+  <hr>
+  <form [formGroup]="commentForm" (ngSubmit)="submitNewComment()">
+    <div>
+      <label for="author">Author:</label>
+      <input id="author" formControlName="author" type="author">
+    </div>
+    <div>
+      <label for="body">Comment:</label>
+      <textarea id="body" formControlName="body" type="body"></textarea>
+    </div>
+    <button type="submit" [disabled]="!commentForm.valid">Submit</button>
+  </form>
+  @for (comment of comments; track $index) {
+    <p>{{comment.author}}</p>
+    <p>{{comment.date | timestampToDate:'date-only'}}</p>
+    <p>{{comment.body}}</p>
+    <hr>
+  }
+</div>

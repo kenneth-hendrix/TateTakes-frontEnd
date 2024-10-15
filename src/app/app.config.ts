@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-below-header', //'toast-top-right',
       preventDuplicates: true,
       progressBar: true,
     }),

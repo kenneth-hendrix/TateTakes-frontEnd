@@ -6,11 +6,12 @@ import { Post } from '../../models/post.model';
 import { PostComponent } from '../post/post.component';
 import { AuthService } from '../../services/authentication.service';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
+import { ExpandedPostComponent } from "../post/expanded-post/expanded-post.component";
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [HeaderComponent, PostComponent, NgxSpinnerComponent],
+  imports: [HeaderComponent, PostComponent, NgxSpinnerComponent, ExpandedPostComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
@@ -25,6 +26,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   buttonType: 'none' | 'login' | 'logout' = 'login';
   somethingWentWrong: boolean = false;
   loading: boolean = false;
+  expandedPost: Post | undefined = undefined;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -56,5 +58,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.$destroy.next();
     this.$destroy.complete();
+  }
+
+  expandPost(post: Post): void {
+    this.expandedPost = post;
+  }
+
+  goBack() {
+    this.expandedPost = undefined;
   }
 }
