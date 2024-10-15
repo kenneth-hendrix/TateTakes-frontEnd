@@ -1,22 +1,25 @@
 <app-header [hideAdmin]="true"></app-header>
-<div>
-  <a (click)="toggleNewPost()">New Post</a>
-  @if (newPostOpen) {
-    <app-new-post></app-new-post>
-  }
-  <br>
-  <a (click)="toggleEdit()">Edit Post</a>
-  @if (editOpen) {
-    <app-edit-post></app-edit-post>
-  }
-  <br>
-  <a (click)="toggleDelete()">Delete Post</a>
-  @if (deleteOpen) {
-    <app-delete-post></app-delete-post>
-  }
-  <br>
-  <a (click)="toggleThreats()">View Threats</a>
-  @if (threatsOpen) {
-    <app-view-threats></app-view-threats>
-  }
+<div class="admin-container">
+  <mat-tab-group>
+    <mat-tab label="New Post">
+      <div class="tab-contents">
+        <app-new-post></app-new-post>
+      </div>
+    </mat-tab>
+    <mat-tab label="Edit Post">
+      <div class="tab-contents">
+        <app-edit-post></app-edit-post>
+      </div>
+    </mat-tab>
+    <mat-tab label="Delete Post">
+      <div class="tab-contents">
+        <app-delete-post></app-delete-post>
+      </div>
+    </mat-tab>
+    <mat-tab label="View Threats">
+      <div class="tab-contents">
+        <app-view-threats></app-view-threats>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

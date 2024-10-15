@@ -5,7 +5,14 @@
   </div>
   <div>
     <label for="body">Body:</label>
-    <textarea id="body" formControlName="body" type="body"></textarea>
+    <textarea id="body"
+              formControlName="body"
+              type="body"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="4"
+              cdkAutosizeMaxRows="15">
+    </textarea>
   </div>
   <button type="submit" [disabled]="!postForm.valid">Submit</button>
 </form>
