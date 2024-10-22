@@ -27,6 +27,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   somethingWentWrong: boolean = false;
   loading: boolean = false;
   expandedPost: Post | undefined = undefined;
+  expandedIndex: number = 0;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -60,7 +61,8 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.$destroy.complete();
   }
 
-  expandPost(post: Post): void {
+  expandPost(post: Post, index: number): void {
+    this.expandedIndex = index;
     this.expandedPost = post;
   }
 

@@ -1,4 +1,5 @@
-<div class="card">
+<div class="card"
+     [ngStyle]="{'border-color': colors[index % colors.length]}">
   <h1 class="title">
     {{post.title}}
   </h1>
@@ -13,5 +14,5 @@
     }
   </div>
   <hr>
-  <a (click)="showComments()">Comments...</a>
+  <a id="comments" (click)="showComments()">Comments...</a>
 </div>

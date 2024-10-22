@@ -1,5 +1,8 @@
-<div class="card">
-  <a (click)="goBack();">&lt; Back</a>
+<div class="card"
+      [ngStyle]="{'border-color': colors[index % colors.length]}">
+  <a (click)="goBack()" class="backButton">
+    <span class="arrow">&lt;</span> Back
+  </a>
   <h1 class="title">
     {{post.title}}
   </h1>
@@ -11,21 +14,37 @@
     <p [innerHTML]="post.body"></p>
   </div>
   <hr>
+  <h2>Leave a comment</h2>
   <form [formGroup]="commentForm" (ngSubmit)="submitNewComment()">
-    <div>
-      <label for="author">Author:</label>
-      <input id="author" formControlName="author" type="author">
+    <div class="formSection">
+      <div class="labelSection">
+        <label class="formLabel" for="author">Author:</label>
+        <span class="charCount" [ngClass]="{red: commentForm.get('author')?.value?.length === 50}">{{ commentForm.get('author')?.value?.length || 0 }}/50</span>
+      </div>
+      <input id="author" formControlName="author" type="author" (input)="checkCharLimit(50, 'author')">
     </div>
-    <div>
-      <label for="body">Comment:</label>
-      <textarea id="body" formControlName="body" type="body"></textarea>
+    <div class="formSection">
+      <div class="labelSection">
+        <label class="formLabel" for="body">Comment:</label>
+        <span class="charCount" [ngClass]="{red: commentForm.get('body')?.value?.length === 500}">{{ commentForm.get('body')?.value?.length || 0 }}/500</span>
+      </div>
+      <textarea id="body"
+                formControlName="body"
+                type="body"
+                (input)="checkCharLimit(500, 'body')"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="15"
+      >
+      </textarea>
     </div>
-    <button type="submit" [disabled]="!commentForm.valid">Submit</button>
+    <button type="submit" [class.disabled]="!commentForm.valid" [disabled]="!commentForm.valid">Submit</button>
   </form>
   @for (comment of comments; track $index) {
-    <p>{{comment.author}}</p>
-    <p>{{comment.date | timestampToDate:'date-only'}}</p>
-    <p>{{comment.body}}</p>
     <hr>
+    <p class="author">{{comment.author}}</p>
+    <p class="date">{{comment.date | timestampToDate:'date-only'}}</p>
+    <p [innerHTML]="comment.body"></p>
   }
 </div>

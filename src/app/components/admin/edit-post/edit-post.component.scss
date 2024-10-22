@@ -1,0 +1,60 @@
+@import "../../../variables.scss";
+
+.titleContainer,
+.bodyContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.formContainer {
+  width: 50%;
+  margin: auto;
+  padding: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  background-color: $TateTakes-Yellow;
+}
+
+input,
+textarea {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.formTitle {
+  display: flex;
+  color: $TateTakes-Red;
+  align-items: center;
+}
+
+label {
+  color: $TateTakes-Red;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+button {
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: $TateTakes-Blue;
+  cursor: pointer;
+  color: $TateTakes-Orange;
+  border: none;
+}
+
+.disabled {
+  background-color: $TateTakes-Red;
+  cursor: not-allowed;
+  color: #fff;
+}
