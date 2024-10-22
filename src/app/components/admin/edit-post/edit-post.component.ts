@@ -6,11 +6,12 @@ import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-edit-post',
   standalone: true,
-  imports: [TimestampToDatePipe, ReactiveFormsModule],
+  imports: [TimestampToDatePipe, ReactiveFormsModule, TextFieldModule],
   templateUrl: './edit-post.component.html',
   styleUrl: './edit-post.component.scss',
 })
@@ -88,5 +89,9 @@ export class EditPostComponent implements OnInit {
       console.error('Post has no ID');
       this.toastr.error('Please try again later', 'Something went wrong');
     }
+  }
+
+  goBack() {
+    this.selectedPost = undefined;
   }
 }

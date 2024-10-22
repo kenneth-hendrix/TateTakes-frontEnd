@@ -13,6 +13,7 @@
   color: $TateTakes-Orange;
   margin: 5px;
   font-weight: 400;
+  font-size: 20px;
 
   &:hover {
     color: darken($TateTakes-Orange, 10%);
@@ -26,6 +27,7 @@
     text-decoration: underline;
     font-weight: 500;
     margin: 5px;
+    font-size: 20px;
 }
 
 .headerContent {

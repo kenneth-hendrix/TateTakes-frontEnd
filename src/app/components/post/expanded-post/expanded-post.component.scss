@@ -10,6 +10,17 @@
   overflow-wrap: break-word;
   background-color: #fff;
   margin-bottom: 50px;
+  border: 5px solid;
+  padding: 15px;
+}
+
+.arrow {
+  position: relative;
+  bottom: 1px;
+  color: $TateTakes-Blue;
+}
+.backButton {
+  color: $TateTakes-Blue;
 }
 
 .card:hover {
@@ -32,4 +43,70 @@
   color: $TateTakes-Blue;
   font-size: 16px;
   margin-left: 20px;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  color: $TateTakes-Blue;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.formLabel {
+  color: $TateTakes-Red;
+}
+
+.labelSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formSection {
+  width: 50%;
+}
+
+#author, #body {
+  width: 100%;
+  padding-right: 42px;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+.charCount {
+  font-size: 12px;
+  top: 25px;
+  right: 5px;
+  position: relative;
+}
+
+.red {
+  color: $TateTakes-Red;
+}
+
+button {
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: $TateTakes-Blue;
+  cursor: pointer;
+  color: $TateTakes-Orange;
+  border: none;
+}
+
+.disabled {
+  background-color: $TateTakes-Red;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.author {
+  color: $TateTakes-Red;
 }

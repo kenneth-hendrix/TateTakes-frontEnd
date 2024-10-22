@@ -2,10 +2,10 @@
 
 @if (!expandedPost) {
   @for (post of feed; track $index) {
-    <app-post [post]="post" (expandPost)="expandPost(post)"></app-post>
+    <app-post [post]="post" [index]="$index" (expandPost)="expandPost(post, $index)"></app-post>
   }
 } @else {
-  <app-expanded-post [post]="expandedPost" (back)="goBack()"></app-expanded-post>
+  <app-expanded-post [post]="expandedPost" (back)="goBack()" [index]="expandedIndex"></app-expanded-post>
 }
 
 @if (somethingWentWrong) {
