@@ -1,12 +1,13 @@
-<div>
+<div class="container">
   @for (post of posts; track $index) {
     <div>
       @if (post.title.length < 50) {
-        <span>{{post.title}} {{post.date | timestampToDate}} </span>
+        <span><span class="title">{{post.title}}</span> {{post.date | timestampToDate}} </span>
       } @else {
-        <span>{{post.title.slice(0, 50)}}... {{post.date | timestampToDate}} </span>
+        <span><span class="title">{{post.title.slice(0, 50)}}...</span> {{post.date | timestampToDate}} </span>
       }
-      <a (click)="deletePost(post.id || '')">Delete Post</a>
+      <a class="delete" (click)="deletePost(post.id || '')">Delete Post</a>
+      <hr>
     </div>
   }
 </div>
