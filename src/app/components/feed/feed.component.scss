@@ -1,0 +1,17 @@
+@import "../../variables.scss";
+.nothingToShow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  max-width: 55%;
+  margin: auto;
+  margin-top: 20px;
+  overflow-wrap: break-word;
+  background-color: #fff;
+  margin-bottom: 50px;
+  border: 5px solid $TateTakes-Red;
+  padding: 15px;
+}
+.nothingToShow h1 {
+  color: $TateTakes-Blue;
+}
