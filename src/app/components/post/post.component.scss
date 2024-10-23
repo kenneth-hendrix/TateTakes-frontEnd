@@ -52,3 +52,11 @@ hr {
   margin-left: 5px;
   color: $TateTakes-Blue;
 }
+
+@media only screen and (max-width: 600px) {
+  .card {
+   margin-left: 0;
+   margin-right: 0;
+   max-width: 100%;
+  }
+}
