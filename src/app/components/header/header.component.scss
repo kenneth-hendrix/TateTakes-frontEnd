@@ -54,20 +54,33 @@
   margin-left: auto;
 }
 
-@media (max-width: 768px) {
-  .headerContent {
-    padding: 64px;
-    box-sizing: border-box;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-    margin: 0;
-  }
-  .first {
-    margin-right: 0 !important;
+@media only screen and (max-width: 600px) {
+  .second {
+    position: static;
+    left: auto ;
+    right: auto;
+    transform: none;
   }
 
-  .thrid {
-    margin-left: 0 !important;
+  .headerContent {
+    flex-direction: column;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  .first {
+    margin-left: 5px;
+    margin-right: 0;
+  }
+
+  .third {
+    margin-left: 5px;
+    margin-right: 0;
+  }
+
+  .header a.active {
+    margin: 0;
   }
 }
