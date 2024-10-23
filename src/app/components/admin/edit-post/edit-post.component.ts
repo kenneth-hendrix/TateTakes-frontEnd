@@ -53,7 +53,9 @@ export class EditPostComponent implements OnInit {
   selectPost(post: Post): void {
     this.selectedPost = post;
     this.postForm.get('title')?.setValue(post.title);
-    this.postForm.get('body')?.setValue(post.body);
+    this.postForm
+      .get('body')
+      ?.setValue(post.body.replace(/<br\s*\/?>/gi, '\n'));
   }
 
   submitEditPost() {

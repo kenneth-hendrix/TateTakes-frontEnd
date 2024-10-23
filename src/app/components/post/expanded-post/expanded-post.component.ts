@@ -95,7 +95,7 @@ export class ExpandedPostComponent implements OnInit {
   checkCharLimit(limit: number, control: string) {
     const bodyControl = this.commentForm.get(control);
     if (bodyControl && bodyControl.value.length > limit) {
-      bodyControl.setValue(bodyControl.value.slice(0, limit)); // Trim the text to 50 characters
+      bodyControl.setValue(bodyControl.value.slice(0, limit));
     }
   }
 }

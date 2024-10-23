@@ -1,8 +1,15 @@
 <app-header [hideThreats]="true"></app-header>
-<form [formGroup]="threatForm" (ngSubmit)="submitNewThreat()">
-  <div>
-    <label for="message">Death Threat:</label>
-    <input id="message" formControlName="message" type="message">
-  </div>
-  <button type="submit" [disabled]="!threatForm.valid">Submit</button>
-</form>
+<div class="card">
+  <form [formGroup]="threatForm" (ngSubmit)="submitNewThreat()">
+    <div class="formSection">
+      <div class="labelSection">
+        <label for="message">Death Threat:</label>
+        <span class="charCount" [ngClass]="{ red: threatForm.get('message')?.value?.length === 1000 }">{{
+          threatForm.get("message")?.value?.length || 0 }}/1000</span>
+      </div>
+      <textarea id="message" formControlName="message" type="message" (input)="checkCharLimit()" cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="15"></textarea>
+      <button type="submit" [class.disabled]="!threatForm.valid" [disabled]="!threatForm.valid">Submit</button>
+    </div>
+  </form>
+</div>
