@@ -11,7 +11,12 @@ import { ExpandedPostComponent } from "../post/expanded-post/expanded-post.compo
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [HeaderComponent, PostComponent, NgxSpinnerComponent, ExpandedPostComponent],
+  imports: [
+    HeaderComponent,
+    PostComponent,
+    NgxSpinnerComponent,
+    ExpandedPostComponent,
+  ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
