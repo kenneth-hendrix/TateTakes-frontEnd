@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/authentication.service';
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() hideButtons: boolean = false;
   @Input() hideAdmin: boolean = false;
   @Input() hideThreats: boolean = false;
+  @Output() onGoHome = new EventEmitter<void>();
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goHome() {
+    this.onGoHome.emit();
     this.router.navigate(['/feed']);
   }
 

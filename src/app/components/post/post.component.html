@@ -14,5 +14,9 @@
     }
   </div>
   <hr>
-  <a id="comments" (click)="showComments()">Comments...</a>
+  @if (commentCount === 0) {
+    <a id="comments" (click)="showComments()">Leave a comment</a>
+  } @else {
+    <a id="comments" (click)="showComments()">{{commentCount}} comments</a>
+  }
 </div>

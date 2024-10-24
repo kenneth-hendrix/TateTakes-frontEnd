@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (onGoHome)="goBack()"></app-header>
 
 @if (!expandedPost) {
   @for (post of feed; track $index) {
