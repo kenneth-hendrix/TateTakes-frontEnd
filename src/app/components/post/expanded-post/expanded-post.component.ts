@@ -35,6 +35,8 @@ export class ExpandedPostComponent implements OnInit {
   private toastr = inject(ToastrService);
   private spinner = inject(NgxSpinnerService);
 
+  imageFound = true;
+
   constructor() {
     this.commentForm = this.fb.group({
       author: ['', [Validators.required, Validators.maxLength(50)]],
@@ -97,5 +99,10 @@ export class ExpandedPostComponent implements OnInit {
     if (bodyControl && bodyControl.value.length > limit) {
       bodyControl.setValue(bodyControl.value.slice(0, limit));
     }
+  }
+
+  imageError() {
+    console.error(`Error finding image\n${this.post.image}`);
+    this.imageFound = false;
   }
 }

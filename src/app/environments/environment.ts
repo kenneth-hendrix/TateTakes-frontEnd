@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyDYlhANMPv1Fo4lwbKNBLBKZxb-D01a9mc',
-    authDomain: 'tate-blog.firebaseapp.com',
-    projectId: 'tate-blog',
-    storageBucket: 'tate-blog.appspot.com',
-    messagingSenderId: '1066758673484',
-    appId: '1:1066758673484:web:4123d0c1de6f31270790e9',
+    apiKey: 'AIzaSyDTMHZhAl5z1pT-yP2lQhvuGQkEe8LLlII',
+    authDomain: 'tateblogdev.firebaseapp.com',
+    projectId: 'tateblogdev',
+    storageBucket: 'tateblogdev.appspot.com',
+    messagingSenderId: '948531107992',
+    appId: '1:948531107992:web:7e15312477db4fca0518ed',
   },
 };

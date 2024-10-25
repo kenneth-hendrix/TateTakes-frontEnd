@@ -25,6 +25,7 @@ export class PostComponent implements OnInit {
   colors: string[] = ['#BC4B51', '#5B8E7D', '#F4A259', '#8CB369'];
 
   commentCount = 0;
+  imageFound = true;
 
   ngOnInit(): void {
     if (this.post.body.length > 700) {
@@ -54,5 +55,10 @@ export class PostComponent implements OnInit {
 
   expand() {
     this.expandPost.emit();
+  }
+
+  imageError() {
+    console.error(`Error finding image\n${this.post.image}`);
+    this.imageFound = false;
   }
 }

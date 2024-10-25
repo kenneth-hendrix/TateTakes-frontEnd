@@ -111,6 +111,17 @@ button {
   color: $TateTakes-Red;
 }
 
+.postImage {
+  max-width: 40%;
+  max-height: 400px;
+  margin: auto;
+}
+
+.imageLink {
+  font-size: 12px;
+  color: $TateTakes-Red
+}
+
 @media only screen and (max-width: 600px) {
   .card {
     margin-left: 0;

@@ -23,6 +23,7 @@ export class NewPostComponent {
   constructor() {
     this.postForm = this.fb.group({
       title: ['', [Validators.required]],
+      image: [''],
       body: ['', [Validators.required]],
     });
   }
@@ -30,10 +31,10 @@ export class NewPostComponent {
   submitNewPost() {
     if (this.postForm.valid) {
       this.spinner.show();
-      const { title, body } = this.postForm.value;
+      const { title, image, body } = this.postForm.value;
       const formattedText = body.replace(/\n/g, '<br>');
       this.feedService
-        .newPost(title, formattedText)
+        .newPost(title, formattedText, image || "")
         .then(() => {
           this.spinner.hide();
           this.postForm.reset();
