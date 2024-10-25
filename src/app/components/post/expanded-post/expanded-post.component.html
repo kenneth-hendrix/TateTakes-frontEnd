@@ -11,6 +11,14 @@
   </p>
   <hr>
   <div class="container">
+    @if (post.image && imageFound) {
+      <div>
+        <img class="postImage" [src]="post.image" (error)="imageError()">
+        <br>
+        <a class="imageLink" [href]="post.image" target="_blank" rel="noopener noreferrer">Full Sized Image</a>
+        <hr>
+      </div>
+    }
     <p [innerHTML]="post.body"></p>
   </div>
   <hr>

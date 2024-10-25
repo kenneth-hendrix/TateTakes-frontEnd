@@ -28,6 +28,7 @@ export class EditPostComponent implements OnInit {
   constructor() {
     this.postForm = this.fb.group({
       title: ['', [Validators.required]],
+      image: [''],
       body: ['', [Validators.required]],
     });
   }
@@ -56,16 +57,18 @@ export class EditPostComponent implements OnInit {
     this.postForm
       .get('body')
       ?.setValue(post.body.replace(/<br\s*\/?>/gi, '\n'));
+    this.postForm.get('image')?.setValue(post.image);
   }
 
   submitEditPost() {
     if (this.postForm.valid && this.selectedPost?.id) {
       this.spinner.show();
-      const { title, body } = this.postForm.value;
+      const { title, image, body } = this.postForm.value;
       const formattedText = body.replace(/\n/g, '<br>');
       let post: Post = {
         body: formattedText,
         title: title,
+        image: image,
         date: this.selectedPost?.date,
       };
       this.feedService
@@ -77,6 +80,7 @@ export class EditPostComponent implements OnInit {
             if (post.id === this.selectedPost?.id) {
               post.body = formattedText;
               post.title = title;
+              post.image = image;
             }
           });
           this.selectedPost = undefined;
