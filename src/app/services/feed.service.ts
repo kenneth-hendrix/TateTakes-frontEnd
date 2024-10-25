@@ -25,10 +25,11 @@ export class FeedService {
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<Post[]>;
   }
 
-  newPost(title: string, body: string): Promise<any> {
+  newPost(title: string, body: string, image = ""): Promise<any> {
     const postsRef = collection(this.firestore, 'posts');
     let post: Post = {
       title: title,
+      image: image,
       body: body,
       date: new Date(),
     };
@@ -40,6 +41,7 @@ export class FeedService {
     return updateDoc(postDocRef, {
       title: post.title,
       body: post.body,
+      image: post.image,
       date: post.date,
     });
   }

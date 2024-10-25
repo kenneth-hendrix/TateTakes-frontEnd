@@ -8,6 +8,14 @@
   </p>
   <hr>
   <div class="container">
+    @if (post.image && imageFound) {
+      <div>
+        <img class="postImage" [src]="post.image" (error)="imageError()">
+        <br>
+        <a class="imageLink" [href]="post.image" target="_blank" rel="noopener noreferrer">Full Sized Image</a>
+        <hr>
+      </div>
+    }
     <span [innerHTML]="textToShow"></span>
     @if (post.body.length > 700) {
       <a class="readMore" (click)="expand()"> Read More</a>

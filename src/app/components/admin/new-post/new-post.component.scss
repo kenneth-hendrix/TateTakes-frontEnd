@@ -54,3 +54,12 @@ button {
   cursor: not-allowed;
   color: #fff;
 }
+
+@media only screen and (max-width: 600px) {
+  .formContainer {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+}

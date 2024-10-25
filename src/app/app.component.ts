@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -10,6 +10,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'tateBlog';
+
+  ngOnInit(): void {
+    console.log("Tate Takes v1.1.0")
+  }
 }
