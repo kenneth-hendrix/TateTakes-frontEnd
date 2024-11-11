@@ -1,0 +1,81 @@
+@import "../../variables.scss";
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  max-width: 55%;
+  margin: auto;
+  margin-top: 20px;
+  overflow-wrap: break-word;
+  background-color: #fff;
+  margin-bottom: 50px;
+  border: 5px solid $TateTakes-Red;
+  padding: 15px;
+}
+
+input {
+  padding: 5px;
+  margin-bottom: 15px;
+  width: 45%;
+  margin-top: 5px;
+}
+
+.labelSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formSection {
+  width: 100%;
+  margin: auto;
+}
+
+label {
+  color: $TateTakes-Red;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+button {
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: $TateTakes-Blue;
+  cursor: pointer;
+  color: $TateTakes-Orange;
+  border: none;
+  margin-top: 5px;
+}
+
+.disabled {
+  background-color: $TateTakes-Red;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.charCount {
+  font-size: 12px;
+  top: 35px;
+  right: 5px;
+  position: relative;
+}
+
+.red {
+  color: $TateTakes-Red;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+
+  .formSection {
+    width: 100%;
+  }
+  input {
+    width: 100%;
+  }
+}

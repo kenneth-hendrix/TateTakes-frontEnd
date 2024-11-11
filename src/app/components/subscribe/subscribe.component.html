@@ -1,0 +1,24 @@
+<app-header></app-header>
+<div class="card">
+  <form [formGroup]="subscribeForm" (ngSubmit)="submit()">
+    <div class="formSection">
+      <div class="labelSection">
+        <label for="email">Don't miss a Tate Take! Subscribe Here:</label>
+      </div>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="user@example.com"
+      />
+      <br>
+      <button
+        type="submit"
+        [class.disabled]="!subscribeForm.valid"
+        [disabled]="!subscribeForm.valid"
+      >
+        Subscribe
+      </button>
+    </div>
+  </form>
+</div>

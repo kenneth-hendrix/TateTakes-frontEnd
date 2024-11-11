@@ -129,6 +129,7 @@
     </div>
 
     <div class="third">
+      <a class="active" id="subLink" (click)="subscribe()">Subscribe</a>
       @if (isAuthenticated && !hideAdmin && !hideButtons) {
       <a class="active" (click)="admin()">Admin</a>
       } @else if (isAuthenticated && hideAdmin && !hideButtons) {

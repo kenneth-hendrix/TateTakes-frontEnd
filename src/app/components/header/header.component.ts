@@ -64,6 +64,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
+  subscribe() {
+    this.router.navigate(['/subscribe']);
+  }
+
   goHome() {
     this.onGoHome.emit();
     this.router.navigate(['/feed']);
