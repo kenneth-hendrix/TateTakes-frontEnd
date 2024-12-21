@@ -1,0 +1,55 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (match the version with your project)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.13.1'  # or whichever version you need
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Set up the production environment file
+      - name: Set up environment.prod.ts
+        run: |
+          echo "Replacing environment.ts with environment.prod.ts"
+          mkdir -p src/environments
+          echo "${{ secrets.ENVIRONMENT_PROD }}" > src/environments/environment.prod.ts
+
+      # Step 5: Build the Angular project in production mode
+      - name: Build Angular project
+        run: ng build -c production
+
+      # Step 6: Deploy the build to the server
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            # Stop the service (if running), remove old files, copy new ones
+            echo "Stopping previous service (if any)..."
+            sudo systemctl stop nginx  # Or your web server
+            sudo rm -rf /var/www/tatetakes/*  # Remove old files
+            sudo cp -r /home/ubuntu/tateBlog-frontEnd/dist/* /var/www/tatetakes/  # Copy new build
+
+            # Restart the service
+            echo "Starting the service again..."
+            sudo systemctl start nginx  # Or your web server
