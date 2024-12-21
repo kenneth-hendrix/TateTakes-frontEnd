@@ -5,6 +5,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { DeathThreatsComponent } from './components/death-threats/death-threats.component';
 import { SubscribeComponent } from './components/subscribe/subscribe.component';
+import { ExpandedPostComponent } from './components/post/expanded-post/expanded-post.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/feed', pathMatch: 'full' },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'deathThreats', component: DeathThreatsComponent },
   { path: 'subscribe', component: SubscribeComponent },
+  { path: 'post/:postId/:index', component: ExpandedPostComponent },
   {
     path: 'admin',
     component: AdminComponent,

@@ -5,8 +5,8 @@ import { BehaviorSubject, Subject, take, takeUntil, timeout } from 'rxjs';
 import { Post } from '../../models/post.model';
 import { PostComponent } from '../post/post.component';
 import { AuthService } from '../../services/authentication.service';
-import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
-import { ExpandedPostComponent } from "../post/expanded-post/expanded-post.component";
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
@@ -14,8 +14,6 @@ import { ExpandedPostComponent } from "../post/expanded-post/expanded-post.compo
   imports: [
     HeaderComponent,
     PostComponent,
-    NgxSpinnerComponent,
-    ExpandedPostComponent,
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
@@ -24,6 +22,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   private feedService = inject(FeedService);
   private authService = inject(AuthService);
   private spinner = inject(NgxSpinnerService);
+  private router = inject(Router);
 
   private $destroy = new Subject<void>();
 
@@ -31,8 +30,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   buttonType: 'none' | 'login' | 'logout' = 'login';
   somethingWentWrong: boolean = false;
   loading: boolean = false;
-  expandedPost: Post | undefined = undefined;
-  expandedIndex: number = 0;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -67,11 +64,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   expandPost(post: Post, index: number): void {
-    this.expandedIndex = index;
-    this.expandedPost = post;
-  }
-
-  goBack() {
-    this.expandedPost = undefined;
+    this.router.navigate([`/post/${post.id}/${index}`]);
   }
 }

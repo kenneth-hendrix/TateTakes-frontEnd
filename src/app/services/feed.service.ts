@@ -10,6 +10,7 @@ import {
   deleteDoc,
   query,
   orderBy,
+  docData,
 } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 
@@ -25,7 +26,12 @@ export class FeedService {
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<Post[]>;
   }
 
-  newPost(title: string, body: string, image = ""): Promise<any> {
+  getPost(postId: string): Observable<Post> {
+    const postRef = doc(this.firestore, `posts/${postId}`);
+    return docData(postRef) as Observable<Post>;
+  }
+
+  newPost(title: string, body: string, image = ''): Promise<any> {
     const postsRef = collection(this.firestore, 'posts');
     let post: Post = {
       title: title,

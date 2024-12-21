@@ -1,11 +1,7 @@
-<app-header (onGoHome)="goBack()"></app-header>
+<app-header></app-header>
 
-@if (!expandedPost) {
-  @for (post of feed; track $index) {
-    <app-post [post]="post" [index]="$index" (expandPost)="expandPost(post, $index)"></app-post>
-  }
-} @else {
-  <app-expanded-post [post]="expandedPost" (back)="goBack()" [index]="expandedIndex"></app-expanded-post>
+@for (post of feed; track $index) {
+  <app-post [post]="post" [index]="$index" (expandPost)="expandPost(post, $index)"></app-post>
 }
 
 @if (somethingWentWrong) {

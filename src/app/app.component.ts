@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   private mailerService = inject(MailerService);
 
   ngOnInit(): void {
-    console.log("Tate Takes v1.2.0");
-    console.log("Deploy worked 2");
+    console.log("Tate Takes v1.2.5");
   }
 }

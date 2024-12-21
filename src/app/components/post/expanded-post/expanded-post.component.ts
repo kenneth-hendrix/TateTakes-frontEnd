@@ -1,13 +1,28 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
+import { take } from 'rxjs';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 import { Post } from '../../../models/post.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommentService } from '../../../services/comment.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Comments } from '../../../models/comments.model';
 import { CommonModule } from '@angular/common';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FeedService } from '../../../services/feed.service';
 
 @Component({
   selector: 'app-expanded-post',
@@ -22,10 +37,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
   styleUrl: './expanded-post.component.scss',
 })
 export class ExpandedPostComponent implements OnInit {
-  @Input({ required: true }) post!: Post;
-  @Input({ required: true }) index!: number;
-  @Output() back = new EventEmitter<void>();
-
   commentForm: FormGroup;
   comments: Comments[] = [];
   colors: string[] = ['#BC4B51', '#5B8E7D', '#F4A259', '#8CB369'];
@@ -34,19 +45,49 @@ export class ExpandedPostComponent implements OnInit {
   private commentService = inject(CommentService);
   private toastr = inject(ToastrService);
   private spinner = inject(NgxSpinnerService);
+  private feedService = inject(FeedService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   imageFound = true;
+  postId = '';
+  post: Post = {
+    title: '',
+    date: new Date(),
+    body: '',
+  };
+  index = 1;
 
   constructor() {
     this.commentForm = this.fb.group({
       author: ['', [Validators.required, Validators.maxLength(50)]],
       body: ['', [Validators.required, Validators.maxLength(500)]],
     });
+
+    this.route.paramMap.subscribe((params) => {
+      this.postId = params.get('postId') ?? '';
+      this.index = parseInt(params.get('index')!) ?? 1;
+      console.log(this.postId);
+    });
   }
 
   ngOnInit(): void {
-    this.getComments();
-    window.scrollTo(0,0);
+    this.spinner.show();
+    this.feedService
+      .getPost(this.postId)
+      .pipe(take(1))
+      .subscribe({
+        next: (resp: Post) => {
+          this.post = resp;
+          this.getComments();
+          window.scrollTo(0, 0);
+        },
+        error: (error) => {
+          this.spinner.hide();
+          console.error(error);
+          this.toastr.error('Please try again later', 'Something went wrong');
+        },
+      });
   }
 
   submitNewComment() {
@@ -74,13 +115,12 @@ export class ExpandedPostComponent implements OnInit {
   }
 
   goBack() {
-    this.back.emit();
+    this.router.navigate(['/feed']);
   }
 
   getComments() {
-    this.spinner.show();
-    if (this.post.id) {
-      this.commentService.getComments(this.post.id).subscribe({
+    if (this.postId) {
+      this.commentService.getComments(this.postId).subscribe({
         next: (results) => {
           this.comments = results;
           this.spinner.hide();
