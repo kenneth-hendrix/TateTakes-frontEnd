@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
+import { HeaderComponent } from '../header/header.component';
 import { FeedService } from '../../services/feed.service';
-import { BehaviorSubject, Subject, take, takeUntil, timeout } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { Post } from '../../models/post.model';
 import { PostComponent } from '../post/post.component';
 import { AuthService } from '../../services/authentication.service';
@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    PostComponent,
-  ],
+  imports: [HeaderComponent, PostComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
@@ -64,6 +61,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   expandPost(post: Post, index: number): void {
-    this.router.navigate([`/post/${post.id}/${index}`]);
+    this.router.navigate([`/post/${post.id}/${index}`], {
+      state: { post: post },
+    });
   }
 }

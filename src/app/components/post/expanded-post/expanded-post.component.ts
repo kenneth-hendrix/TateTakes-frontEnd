@@ -1,12 +1,5 @@
 import { take } from 'rxjs';
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 import { Post } from '../../../models/post.model';
 import {
@@ -23,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedService } from '../../../services/feed.service';
+import { HeaderComponent } from '../../header/header.component';
 
 @Component({
   selector: 'app-expanded-post',
@@ -32,6 +26,7 @@ import { FeedService } from '../../../services/feed.service';
     ReactiveFormsModule,
     CommonModule,
     TextFieldModule,
+    HeaderComponent,
   ],
   templateUrl: './expanded-post.component.html',
   styleUrl: './expanded-post.component.scss',
@@ -69,26 +64,34 @@ export class ExpandedPostComponent implements OnInit {
       this.index = parseInt(params.get('index')!) ?? 1;
       console.log(this.postId);
     });
+
+    this.spinner.show();
+    const currentNav = this.router.getCurrentNavigation();
+    const post = currentNav?.extras?.state?.['post'] ?? null;
+    if (post) {
+      this.post = post;
+      this.getComments();
+      window.scrollTo(0, 0);
+    } else {
+      this.feedService
+        .getPost(this.postId)
+        .pipe(take(1))
+        .subscribe({
+          next: (resp: Post) => {
+            this.post = resp;
+            this.getComments();
+            window.scrollTo(0, 0);
+          },
+          error: (error) => {
+            this.spinner.hide();
+            console.error(error);
+            this.toastr.error('Please try again later', 'Something went wrong');
+          },
+        });
+    }
   }
 
-  ngOnInit(): void {
-    this.spinner.show();
-    this.feedService
-      .getPost(this.postId)
-      .pipe(take(1))
-      .subscribe({
-        next: (resp: Post) => {
-          this.post = resp;
-          this.getComments();
-          window.scrollTo(0, 0);
-        },
-        error: (error) => {
-          this.spinner.hide();
-          console.error(error);
-          this.toastr.error('Please try again later', 'Something went wrong');
-        },
-      });
-  }
+  ngOnInit(): void {}
 
   submitNewComment() {
     if (this.commentForm.valid && this.post.id) {
