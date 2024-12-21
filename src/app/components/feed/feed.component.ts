@@ -46,6 +46,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         next: (response: Post[]) => {
           this.feed = response;
           this.spinner.hide();
+          window.scrollTo(0,0);
         },
         error: (error) => {
           console.error(error);
