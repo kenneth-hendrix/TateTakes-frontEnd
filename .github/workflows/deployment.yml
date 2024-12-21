@@ -24,18 +24,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Step 4: Install Angular CLI globally
+      - name: Install Angular CLI globally
+        run: npm install -g @angular/cli
+
       # Step 4: Set up the production environment file
       - name: Set up environment.prod.ts
         run: |
           echo "Replacing environment.ts with environment.prod.ts"
-          mkdir -p src/environments
-          echo "${{ secrets.ENVIRONMENT_PROD }}" > src/environments/environment.prod.ts
+          mkdir -p src/app/environments
+          echo "${{ secrets.ENVIRONMENT_PROD }}" > src/app/environments/environment.ts
+          echo "${{ secrets.ENVIRONMENT_PROD }}" > src/app/environments/environment.prod.ts
 
       # Step 5: Build the Angular project in production mode
       - name: Build Angular project
-        run: ng build -c production
+        run: npm run build
 
-      # Step 6: Deploy the build to the server
+      - name: Verify build output directory before copy
+        run: |
+          echo "Listing files in the build directory:"
+          ls -la /home/runner/work/tateBlog-frontEnd/tateBlog-frontEnd/dist/tate-blog/browser
+
+      # Upload the build files to the remote server
+      - name: Upload build files to server
+        uses: appleboy/scp-action@v0.1.2
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: "/home/runner/work/tateBlog-frontEnd/tateBlog-frontEnd/dist/tate-blog/browser/*"
+          target: "/home/${{ secrets.SERVER_USER }}/tateBlog-frontEnd/"
+
+      # Deploy to the server using SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -44,12 +65,22 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            # Stop the service (if running), remove old files, copy new ones
+            # Stop the service and remove old files
             echo "Stopping previous service (if any)..."
-            sudo systemctl stop nginx  # Or your web server
-            sudo rm -rf /var/www/tatetakes/*  # Remove old files
-            sudo cp -r /home/ubuntu/tateBlog-frontEnd/dist/* /var/www/tatetakes/  # Copy new build
+            sudo systemctl stop nginx
+
+            # Remove old files
+            echo "Removing old files..."
+            sudo rm -rf /var/www/tatetakes/*
+
+            # Copy new build files
+            echo "Copying new build files..."
+            sudo cp -r /home/${{ secrets.SERVER_USER }}/tateBlog-frontEnd/${{ secrets.SERVER_USER }}/workspace/dist/tate-blog/browser/* /var/www/tatetakes/
 
             # Restart the service
             echo "Starting the service again..."
-            sudo systemctl start nginx  # Or your web server
+            sudo systemctl start nginx
+
+            #Clean up transfer
+            echo "Cleaning up ssh transfer folder"
+            rm -rf /home/${{ secrets.SERVER_USER }}/tateBlog-frontEnd/

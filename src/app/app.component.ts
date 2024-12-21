@@ -18,13 +18,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Tate Takes v1.2.0");
-    this.mailerService.sendPing().subscribe({
-      next: (resp) => {
-        console.log(resp.message);
-      },
-      error: (err) => {
-        console.error(err.message);
-      }
-  });
+    console.log("Deploy worked 2");
   }
 }
