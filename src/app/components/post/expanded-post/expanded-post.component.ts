@@ -62,7 +62,6 @@ export class ExpandedPostComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get('postId') ?? '';
       this.index = parseInt(params.get('index')!) ?? 1;
-      console.log(this.postId);
     });
 
     this.spinner.show();
