@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.13.1'  # or whichever version you need
+          node-version: '20.13.1'
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -43,7 +43,7 @@ jobs:
       - name: Verify build output directory before copy
         run: |
           echo "Listing files in the build directory:"
-          ls -la /home/runner/work/tateBlog-frontEnd/tateBlog-frontEnd/dist/tate-blog/browser
+          ls -la /home/runner/work/TateTakes-frontEnd/TateTakes-frontEnd/dist/tate-blog/browser
 
       # Upload the build files to the remote server
       - name: Upload build files to server
@@ -53,8 +53,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "/home/runner/work/tateBlog-frontEnd/tateBlog-frontEnd/dist/tate-blog/browser/*"
-          target: "/home/${{ secrets.SERVER_USER }}/tateBlog-frontEnd/"
+          source: "/home/runner/work/TateTakes-frontEnd/TateTakes-frontEnd/dist/tate-blog/browser/*"
+          target: "/home/${{ secrets.SERVER_USER }}/TateTakes-frontEnd/"
 
       # Deploy to the server using SSH
       - name: Deploy to server
@@ -75,7 +75,7 @@ jobs:
 
             # Copy new build files
             echo "Copying new build files..."
-            sudo cp -r /home/${{ secrets.SERVER_USER }}/tateBlog-frontEnd/${{ secrets.SERVER_USER }}/workspace/dist/tate-blog/browser/* /var/www/tatetakes/
+            sudo cp -r /home/${{ secrets.SERVER_USER }}/TateTakes-frontEnd/${{ secrets.SERVER_USER }}/workspace/dist/tate-blog/browser/* /var/www/tatetakes/
 
             # Restart the service
             echo "Starting the service again..."
