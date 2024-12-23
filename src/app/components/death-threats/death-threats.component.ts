@@ -1,8 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DeathThreatService } from '../../services/death-threat.service';
-import { HeaderComponent } from "../header/header.component";
+import { HeaderComponent } from '../header/header.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -58,5 +63,9 @@ export class DeathThreatsComponent {
     if (bodyControl && bodyControl.value.length > 1000) {
       bodyControl.setValue(bodyControl.value.slice(0, 1000));
     }
+  }
+
+  getMessageLength() {
+    return this.threatForm.get('message')?.value?.length;
   }
 }
