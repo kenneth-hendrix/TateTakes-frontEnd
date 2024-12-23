@@ -3,9 +3,6 @@ import {
   Firestore,
   collectionData,
   addDoc,
-  doc,
-  updateDoc,
-  deleteDoc,
   query,
   orderBy,
 } from '@angular/fire/firestore';
@@ -22,12 +19,14 @@ export class CommentService {
   getComments(parent: string): Observable<Comments[]> {
     const postsRef = collection(this.firestore, `posts/${parent}/comments`);
     const sortedQuery = query(postsRef, orderBy('date', 'desc'));
-    return collectionData(sortedQuery, { idField: 'id' }) as Observable<Comments[]>;
+    return collectionData(sortedQuery, { idField: 'id' }) as Observable<
+      Comments[]
+    >;
   }
 
-  newComment(author: string, body: string, parent: string): Promise<any> {
+  newComment(author: string, body: string, parent: string) {
     const postsRef = collection(this.firestore, `posts/${parent}/comments`);
-    let comment: Comments = {
+    const comment: Comments = {
       author: author,
       body: body,
       date: new Date(),

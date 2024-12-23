@@ -4,6 +4,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
+  User,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -12,7 +13,7 @@ import {
 export class AuthService {
   private auth = getAuth();
 
-  currentUser: any = {};
+  currentUser: User | null = null;
   private authStatusSub = new BehaviorSubject(this.currentUser);
   currentAuthStatus = this.authStatusSub.asObservable();
 

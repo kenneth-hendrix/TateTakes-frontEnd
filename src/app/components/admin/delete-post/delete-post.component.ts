@@ -38,7 +38,7 @@ export class DeletePostComponent implements OnInit {
   deletePost(id: string): void {
     this.spinner.show();
     if (id) {
-      let temp = [...this.posts];
+      const temp = [...this.posts];
       this.posts = this.posts.filter((post) => post.id !== id);
       this.feedService.deletePost(id).then(() => {
         this.spinner.hide();

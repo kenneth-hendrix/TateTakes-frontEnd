@@ -65,7 +65,7 @@ export class EditPostComponent implements OnInit {
       this.spinner.show();
       const { title, image, body } = this.postForm.value;
       const formattedText = body.replace(/\n/g, '<br>');
-      let post: Post = {
+      const post: Post = {
         body: formattedText,
         title: title,
         image: image,

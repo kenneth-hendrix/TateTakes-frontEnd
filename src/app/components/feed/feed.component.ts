@@ -22,7 +22,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   private $destroy = new Subject<void>();
 
   feed: Post[] = [];
-  somethingWentWrong: boolean = false;
+  somethingWentWrong = false;
 
   ngOnInit(): void {
     this.spinner.show();

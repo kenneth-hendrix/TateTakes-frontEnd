@@ -1,59 +1,90 @@
 <app-header></app-header>
-<div class="card"
-      [ngStyle]="{'border-color': colors[index % colors.length]}">
-  <a (click)="goBack()" class="backButton">
+<div class="card" [ngStyle]="{ 'border-color': colors[index % colors.length] }">
+  <a (click)="goBack()" class="backButton" href="#" (keydown)="goBack()" tabIndex="0">
     <span class="arrow">&lt;</span> Back
   </a>
   <h1 class="title">
-    {{post.title}}
+    {{ post.title }}
   </h1>
   <p class="date">
-    {{post.date | timestampToDate:'date-only'}}
+    {{ post.date | timestampToDate: "date-only" }}
   </p>
-  <hr>
+  <hr />
   <div class="container">
     @if (post.image && imageFound) {
       <div>
-        <img class="postImage" [src]="post.image" (error)="imageError()">
-        <br>
-        <a class="imageLink" [href]="post.image" target="_blank" rel="noopener noreferrer">Full Sized Image</a>
-        <hr>
+        <img
+          class="postImage"
+          [src]="post.image"
+          (error)="imageError()"
+          alt="Post Image"
+        />
+        <br />
+        <a
+          class="imageLink"
+          tabIndex="{0}"
+          [href]="post.image"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Full Sized Image</a
+        >
+        <hr />
       </div>
     }
     <p [innerHTML]="post.body"></p>
   </div>
-  <hr>
+  <hr />
   <h2>Leave a comment</h2>
   <form [formGroup]="commentForm" (ngSubmit)="submitNewComment()">
     <div class="formSection">
       <div class="labelSection">
         <label class="formLabel" for="author">Author:</label>
-        <span class="charCount" [ngClass]="{red: commentForm.get('author')?.value?.length === 50}">{{ commentForm.get('author')?.value?.length || 0 }}/50</span>
+        <span
+          class="charCount"
+          [ngClass]="{ red: getAuthorLength() === 50 }"
+          >{{ getAuthorLength() || 0 }}/50</span
+        >
       </div>
-      <input id="author" formControlName="author" type="author" (input)="checkCharLimit(50, 'author')">
+      <input
+        id="author"
+        formControlName="author"
+        type="text"
+        (input)="checkCharLimit(50, 'author')"
+      />
     </div>
     <div class="formSection">
       <div class="labelSection">
         <label class="formLabel" for="body">Comment:</label>
-        <span class="charCount" [ngClass]="{red: commentForm.get('body')?.value?.length === 500}">{{ commentForm.get('body')?.value?.length || 0 }}/500</span>
+        <span
+          class="charCount"
+          [ngClass]="{ red: getCommentLength() === 500 }"
+          >{{ getCommentLength() || 0 }}/500</span
+        >
       </div>
-      <textarea id="body"
-                formControlName="body"
-                type="body"
-                (input)="checkCharLimit(500, 'body')"
-                cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="15"
+      <textarea
+        id="body"
+        formControlName="body"
+        type="body"
+        (input)="checkCharLimit(500, 'body')"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="4"
+        cdkAutosizeMaxRows="15"
       >
       </textarea>
     </div>
-    <button type="submit" [class.disabled]="!commentForm.valid" [disabled]="!commentForm.valid">Submit</button>
+    <button
+      type="submit"
+      [class.disabled]="!commentForm.valid"
+      [disabled]="!commentForm.valid"
+    >
+      Submit
+    </button>
   </form>
   @for (comment of comments; track $index) {
-    <hr>
-    <p class="author">{{comment.author}}</p>
-    <p class="date">{{comment.date | timestampToDate:'date-only'}}</p>
+    <hr />
+    <p class="author">{{ comment.author }}</p>
+    <p class="date">{{ comment.date | timestampToDate: "date-only" }}</p>
     <p [innerHTML]="comment.body"></p>
   }
 </div>

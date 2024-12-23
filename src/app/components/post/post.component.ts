@@ -1,5 +1,12 @@
 import { take } from 'rxjs';
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Post } from '../../models/post.model';
 import { TimestampToDatePipe } from '../../pipes/timestamp-to-date.pipe';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +28,7 @@ export class PostComponent implements OnInit {
   private commentService = inject(CommentService);
   private toastr = inject(ToastrService);
 
-  textToShow: string = '';
+  textToShow = '';
   colors: string[] = ['#BC4B51', '#5B8E7D', '#F4A259', '#8CB369'];
 
   commentCount = 0;

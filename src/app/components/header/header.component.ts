@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private spinner = inject(NgxSpinnerService);
   private activatedRoute = inject(ActivatedRoute);
 
-  isAuthenticated: boolean = false;
+  isAuthenticated = false;
   currentPage: string | undefined;
 
   private $destroy = new Subject<void>();
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.getAuthStatus();
     this.authService.currentAuthStatus
       .pipe(takeUntil(this.$destroy))
-      .subscribe((authStatus) => (this.isAuthenticated = authStatus));
+      .subscribe((authStatus) => (this.isAuthenticated = !!authStatus));
 
     this.activatedRoute.url
       .pipe(takeUntil(this.$destroy))

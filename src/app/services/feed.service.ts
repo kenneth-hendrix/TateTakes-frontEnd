@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../models/post.model';
 import {
@@ -31,9 +31,9 @@ export class FeedService {
     return docData(postRef) as Observable<Post>;
   }
 
-  newPost(title: string, body: string, image = ''): Promise<any> {
+  newPost(title: string, body: string, image = '') {
     const postsRef = collection(this.firestore, 'posts');
-    let post: Post = {
+    const post: Post = {
       title: title,
       image: image,
       body: body,

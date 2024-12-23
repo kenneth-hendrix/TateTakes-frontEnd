@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
 
-  isAuthenticated: boolean = false;
+  isAuthenticated = false;
 
   private $destroy = new Subject<void>();
 
@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.getAuthStatus();
     this.authService.currentAuthStatus
       .pipe(takeUntil(this.$destroy))
-      .subscribe((authStatus) => (this.isAuthenticated = authStatus));
+      .subscribe((authStatus) => {
+        this.isAuthenticated = !!authStatus;
+      });
   }
 
   ngOnDestroy(): void {

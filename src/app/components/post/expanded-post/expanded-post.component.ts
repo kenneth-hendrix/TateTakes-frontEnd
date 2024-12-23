@@ -1,5 +1,5 @@
 import { take } from 'rxjs';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 import { Post } from '../../../models/post.model';
 import {
@@ -31,7 +31,7 @@ import { HeaderComponent } from '../../header/header.component';
   templateUrl: './expanded-post.component.html',
   styleUrl: './expanded-post.component.scss',
 })
-export class ExpandedPostComponent implements OnInit {
+export class ExpandedPostComponent {
   commentForm: FormGroup;
   comments: Comments[] = [];
   colors: string[] = ['#BC4B51', '#5B8E7D', '#F4A259', '#8CB369'];
@@ -90,8 +90,6 @@ export class ExpandedPostComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
   submitNewComment() {
     if (this.commentForm.valid && this.post.id) {
       this.spinner.show();
@@ -104,7 +102,7 @@ export class ExpandedPostComponent implements OnInit {
           this.commentForm.reset();
           this.toastr.success(
             `Your comment has been published succesfully`,
-            'Success'
+            'Success',
           );
           this.getComments();
         })
@@ -146,5 +144,13 @@ export class ExpandedPostComponent implements OnInit {
   imageError() {
     console.error(`Error finding image\n${this.post.image}`);
     this.imageFound = false;
+  }
+
+  getAuthorLength() {
+    return this.commentForm.get('author')?.value?.length;
+  }
+
+  getCommentLength() {
+    return this.commentForm.get('body')?.value?.length;
   }
 }
