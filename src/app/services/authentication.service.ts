@@ -1,28 +1,40 @@
-import {inject, Injectable} from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-import { map, Observable, take } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private afAuth = inject(AngularFireAuth);
+  private auth = getAuth();
 
-  login(email: string, password: string): Promise<firebase.auth.UserCredential> {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
+  currentUser: any = {};
+  private authStatusSub = new BehaviorSubject(this.currentUser);
+  currentAuthStatus = this.authStatusSub.asObservable();
+
+  constructor() {
+    this.getAuthStatus();
   }
 
-  logout(): Promise<void> {
-    return this.afAuth.signOut();
+  getAuthStatus() {
+    this.auth.onAuthStateChanged((credential) => {
+      if (credential) {
+        this.authStatusSub.next(credential);
+      } else {
+        this.authStatusSub.next(null);
+      }
+    });
   }
 
-  get isAuthenticated(): Observable<boolean> {
-    return this.afAuth.authState.pipe(
-      take(1),
-      map((user) => {
-        return !!user;
-      })
-    );
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  logout() {
+    return signOut(this.auth);
   }
 }
