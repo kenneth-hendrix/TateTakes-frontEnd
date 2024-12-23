@@ -1,10 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FeedService } from '../../services/feed.service';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import { Post } from '../../models/post.model';
 import { PostComponent } from '../post/post.component';
-import { AuthService } from '../../services/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 
@@ -17,28 +16,17 @@ import { Router } from '@angular/router';
 })
 export class FeedComponent implements OnInit, OnDestroy {
   private feedService = inject(FeedService);
-  private authService = inject(AuthService);
   private spinner = inject(NgxSpinnerService);
   private router = inject(Router);
 
   private $destroy = new Subject<void>();
 
   feed: Post[] = [];
-  buttonType: 'none' | 'login' | 'logout' = 'login';
-  somethingWentWrong: boolean = false;
-  loading: boolean = false;
+  somethingWentWrong = false;
 
   ngOnInit(): void {
     this.spinner.show();
-    this.authService.isAuthenticated
-      .pipe(takeUntil(this.$destroy))
-      .subscribe((value) => {
-        if (value) {
-          this.buttonType = 'logout';
-        } else {
-          this.buttonType = 'login';
-        }
-      });
+
     this.feedService
       .getFeed()
       .pipe(take(1))
@@ -46,7 +34,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         next: (response: Post[]) => {
           this.feed = response;
           this.spinner.hide();
-          window.scrollTo(0,0);
+          window.scrollTo(0, 0);
         },
         error: (error) => {
           console.error(error);

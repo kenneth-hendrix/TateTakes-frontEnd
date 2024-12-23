@@ -1,7 +1,9 @@
-export type Post = {
+import { Timestamp } from 'firebase/firestore';
+
+export interface Post {
   id?: string;
   title: string;
   image?: string;
-  date: any;
+  date: Timestamp | Date;
   body: string;
-};
+}

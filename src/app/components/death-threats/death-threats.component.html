@@ -1,11 +1,11 @@
-<app-header [hideThreats]="true"></app-header>
+<app-header></app-header>
 <div class="card">
   <form [formGroup]="threatForm" (ngSubmit)="submitNewThreat()">
     <div class="formSection">
       <div class="labelSection">
         <label for="message">Death Threat:</label>
-        <span class="charCount" [ngClass]="{ red: threatForm.get('message')?.value?.length === 1000 }">{{
-          threatForm.get("message")?.value?.length || 0 }}/1000</span>
+        <span class="charCount" [ngClass]="{ red: getMessageLength() === 1000 }">{{
+          getMessageLength() || 0 }}/1000</span>
       </div>
       <textarea id="message" formControlName="message" type="message" (input)="checkCharLimit()" cdkTextareaAutosize
         #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="15"></textarea>

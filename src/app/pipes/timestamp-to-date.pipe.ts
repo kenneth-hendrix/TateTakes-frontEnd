@@ -1,24 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Timestamp } from 'firebase/firestore';
 
 @Pipe({
   name: 'timestampToDate',
   standalone: true,
 })
 export class TimestampToDatePipe implements PipeTransform {
-  transform(
-    value: { seconds: number; nanoseconds: number },
-    format: string = 'default'
-  ): string {
-    if (
-      !value ||
-      typeof value.seconds !== 'number' ||
-      typeof value.nanoseconds !== 'number'
-    ) {
-      return '';
+  transform(value: Timestamp | Date, format = 'default'): string {
+    let date: Date;
+    if (value instanceof Timestamp) {
+      date = value.toDate();
+    } else {
+      date = value;
     }
-
-    const milliseconds = value.seconds * 1000 + value.nanoseconds / 1000000;
-    const date = new Date(milliseconds);
 
     switch (format) {
       case 'default':

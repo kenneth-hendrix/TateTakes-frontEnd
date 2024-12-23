@@ -2,8 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/authentication.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HeaderComponent } from "../header/header.component";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { HeaderComponent } from '../header/header.component';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -24,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
 
-  isAuthenticated: boolean = false;
+  isAuthenticated = false;
 
   private $destroy = new Subject<void>();
 
@@ -36,14 +41,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authService.isAuthenticated
+    this.authService.getAuthStatus();
+    this.authService.currentAuthStatus
       .pipe(takeUntil(this.$destroy))
-      .subscribe((value) => {
-        if (value) {
-          this.isAuthenticated = true;
-        } else {
-          this.isAuthenticated = false;
-        }
+      .subscribe((authStatus) => {
+        this.isAuthenticated = !!authStatus;
       });
   }
 

@@ -1,5 +1,7 @@
-export type Threat = {
-  id?: string,
-  date: any,
-  message: string
+import { Timestamp } from 'firebase/firestore';
+
+export interface Threat {
+  id?: string;
+  date: Timestamp | Date;
+  message: string;
 }

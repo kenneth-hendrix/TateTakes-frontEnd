@@ -1,9 +1,16 @@
-import { Router } from '@angular/router';
-import { AuthService } from './../../services/authentication.service';
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/authentication.service';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+enum PAGES {
+  DeathThreats = 'deathThreats',
+  Login = 'login',
+  Subscribe = 'subscribe',
+  Admin = 'admin',
+}
 
 @Component({
   selector: 'app-header',
@@ -13,29 +20,27 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Input() hideButtons: boolean = false;
-  @Input() hideAdmin: boolean = false;
-  @Input() hideThreats: boolean = false;
-  @Output() onGoHome = new EventEmitter<void>();
-
   private authService = inject(AuthService);
   private router = inject(Router);
   private toastr = inject(ToastrService);
   private spinner = inject(NgxSpinnerService);
+  private activatedRoute = inject(ActivatedRoute);
 
-  isAuthenticated: boolean = false;
+  isAuthenticated = false;
+  currentPage: string | undefined;
 
   private $destroy = new Subject<void>();
 
   ngOnInit(): void {
-    this.authService.isAuthenticated
+    this.authService.getAuthStatus();
+    this.authService.currentAuthStatus
       .pipe(takeUntil(this.$destroy))
-      .subscribe((value) => {
-        if (value) {
-          this.isAuthenticated = true;
-        } else {
-          this.isAuthenticated = false;
-        }
+      .subscribe((authStatus) => (this.isAuthenticated = !!authStatus));
+
+    this.activatedRoute.url
+      .pipe(takeUntil(this.$destroy))
+      .subscribe((urlSegments) => {
+        this.currentPage = urlSegments.map((segment) => segment.path).join('/');
       });
   }
 
@@ -51,7 +56,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .then(() => {
         this.spinner.hide();
         this.router.navigate(['/feed']);
-        window.location.reload();
       })
       .catch((error) => {
         this.spinner.hide();
@@ -69,7 +73,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goHome() {
-    this.onGoHome.emit();
     this.router.navigate(['/feed']);
   }
 
@@ -80,4 +83,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   threaten() {
     this.router.navigate(['/deathThreats']);
   }
+
+  protected readonly PAGES = PAGES;
 }

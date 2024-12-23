@@ -1,30 +1,44 @@
-<div class="card"
-     [ngStyle]="{'border-color': colors[index % colors.length]}">
+<div class="card" [ngStyle]="{ 'border-color': colors[index % colors.length] }">
   <h1 class="title">
-    {{post.title}}
+    {{ post.title }}
   </h1>
   <p class="date">
-    {{post.date | timestampToDate:'date-only'}}
+    {{ post.date | timestampToDate: "date-only" }}
   </p>
-  <hr>
+  <hr />
   <div class="container">
     @if (post.image && imageFound) {
       <div>
-        <img class="postImage" [src]="post.image" (error)="imageError()">
-        <br>
-        <a class="imageLink" [href]="post.image" target="_blank" rel="noopener noreferrer">Full Sized Image</a>
-        <hr>
+        <img
+          class="postImage"
+          [src]="post.image"
+          (error)="imageError()"
+          alt="Post Image"
+        />
+        <br />
+        <a
+          class="imageLink"
+          [href]="post.image"
+          target="_blank"
+          rel="noopener noreferrer"
+          tabindex="{0}"
+          >Full Sized Image</a
+        >
+        <hr />
       </div>
     }
     <span [innerHTML]="textToShow"></span>
     @if (post.body.length > 700) {
-      <a class="readMore" (click)="expand()"> Read More</a>
+      <a class="readMore" (click)="expand()" (keydown)="expand()" tabindex="{0}"> Read More</a>
     }
   </div>
-  <hr>
-  @if (commentCount === 0) {
-    <a id="comments" (click)="showComments()">Leave a comment</a>
-  } @else {
-    <a id="comments" (click)="showComments()">{{commentCount}} comments</a>
-  }
+  <hr />
+  <a
+    id="comments"
+    (click)="showComments()"
+    (keydown)="showComments()"
+    tabindex="{0}"
+  >
+    {{ commentCount === 0 ? "Leave a comment" : commentCount + " comment" }}{{commentCount > 1 ? 's' : ''}}
+  </a>
 </div>
