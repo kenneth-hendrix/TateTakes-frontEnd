@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../models/post.model';
 import {
@@ -18,7 +18,7 @@ import { collection } from '@firebase/firestore';
   providedIn: 'root',
 })
 export class FeedService {
-  constructor(private firestore: Firestore) {}
+  private firestore = inject(Firestore);
 
   getFeed(): Observable<Post[]> {
     const postsRef = collection(this.firestore, 'posts');

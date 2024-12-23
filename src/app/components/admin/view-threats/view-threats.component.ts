@@ -16,13 +16,13 @@ import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
 export class ViewThreatsComponent implements OnInit {
   private spinner = inject(NgxSpinnerService);
   private toastr = inject(ToastrService);
-  private deathTheatService = inject(DeathThreatService);
+  private deathThreatService = inject(DeathThreatService);
 
   threats: Threat[] = [];
 
   ngOnInit(): void {
     this.spinner.show();
-    this.deathTheatService.getThreats().pipe(take(1)).subscribe({
+    this.deathThreatService.getThreats().pipe(take(1)).subscribe({
       next: (threats) => {
         this.threats = threats;
         this.spinner.hide();

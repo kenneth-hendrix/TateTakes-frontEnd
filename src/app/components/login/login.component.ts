@@ -39,11 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.isAuthenticated
       .pipe(takeUntil(this.$destroy))
       .subscribe((value) => {
-        if (value) {
-          this.isAuthenticated = true;
-        } else {
-          this.isAuthenticated = false;
-        }
+        this.isAuthenticated = value;
       });
   }
 
