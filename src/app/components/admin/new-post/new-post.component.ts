@@ -1,5 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FeedService } from '../../../services/feed.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -40,7 +45,7 @@ export class NewPostComponent {
           this.postForm.reset();
           this.toastr.success(
             `Your post, ${title}, has been published successfully`,
-            'Success'
+            'Success',
           );
         })
         .catch((error) => {

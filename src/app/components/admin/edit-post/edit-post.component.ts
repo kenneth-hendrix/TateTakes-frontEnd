@@ -2,8 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FeedService } from '../../../services/feed.service';
 import { take } from 'rxjs';
 import { Post } from '../../../models/post.model';
-import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TextFieldModule } from '@angular/cdk/text-field';

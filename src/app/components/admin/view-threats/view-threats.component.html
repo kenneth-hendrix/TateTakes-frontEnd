@@ -1,10 +1,10 @@
 <div>
   @for (threat of threats; track $index) {
     <div class="threat">
-      <span class="date">{{threat.date | timestampToDate:'date-only'}}</span>
-      <br>
+      <span class="date">{{ threat.date | timestampToDate: "date-only" }}</span>
+      <br />
       <span class="message" [innerHTML]="threat.message"></span>
-      <hr>
+      <hr />
     </div>
   }
 </div>

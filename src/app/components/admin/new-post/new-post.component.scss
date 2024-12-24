@@ -1,5 +1,6 @@
 @import "../../../variables.scss";
-.titleContainer, .bodyContainer {
+.titleContainer,
+.bodyContainer {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -15,14 +16,16 @@
   background-color: $TateTakes-Yellow;
 }
 
-input, textarea {
+input,
+textarea {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
   border-radius: 5px;
   border: none;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   outline: none;
 }

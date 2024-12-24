@@ -129,24 +129,43 @@
   <div class="headerContent">
     <div class="first">
       @if (currentPage !== PAGES.DeathThreats) {
-        <a class="active" (click)="threaten()" tabindex="{0}" (keydown)="threaten()">Send Death Threats to Author</a>
+        <a
+          class="active"
+          (click)="threaten()"
+          tabindex="{0}"
+          (keydown)="threaten()"
+          >Send Death Threats to Author</a
+        >
       } @else {
         <p class="current">Send Death Threats to Author</p>
       }
     </div>
 
     <div class="third">
-<!--      TODO subscribe link styling-->
-      <a class="active" id="subLink" (click)="subscribe()" tabindex="{0}" (keydown)="subscribe()">Subscribe</a>
+      <!--      TODO subscribe link styling-->
+      <a
+        class="active"
+        id="subLink"
+        (click)="subscribe()"
+        tabindex="{0}"
+        (keydown)="subscribe()"
+        >Subscribe</a
+      >
       @if (isAuthenticated && currentPage !== PAGES.Admin) {
-        <a class="active" (click)="admin()" tabindex="{0}" (keydown)="admin()">Admin</a>
+        <a class="active" (click)="admin()" tabindex="{0}" (keydown)="admin()"
+          >Admin</a
+        >
       } @else if (isAuthenticated && currentPage === PAGES.Admin) {
         <a class="current">Admin</a>
       }
       @if (isAuthenticated) {
-        <a class="active" (click)="logout()" (keydown)="logout()" tabindex="{0}">Log Out</a>
+        <a class="active" (click)="logout()" (keydown)="logout()" tabindex="{0}"
+          >Log Out</a
+        >
       } @else if (!isAuthenticated && currentPage !== PAGES.Login) {
-        <a class="active" (click)="login()" (keydown)="login()" tabindex="{0}">Log In</a>
+        <a class="active" (click)="login()" (keydown)="login()" tabindex="{0}"
+          >Log In</a
+        >
       } @else if (!isAuthenticated && currentPage === PAGES.Login) {
         <a class="current">Log In</a>
       }

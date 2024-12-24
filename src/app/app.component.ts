@@ -7,10 +7,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   standalone: true,
   imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
-    console.log("Tate Takes v1.2.5");
+    console.log('Tate Takes v1.2.5');
   }
 }

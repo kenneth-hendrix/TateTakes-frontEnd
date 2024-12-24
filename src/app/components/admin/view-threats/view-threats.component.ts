@@ -4,14 +4,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { DeathThreatService } from '../../../services/death-threat.service';
 import { take } from 'rxjs';
-import { TimestampToDatePipe } from "../../../pipes/timestamp-to-date.pipe";
+import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 
 @Component({
   selector: 'app-view-threats',
   standalone: true,
   imports: [TimestampToDatePipe],
   templateUrl: './view-threats.component.html',
-  styleUrl: './view-threats.component.scss'
+  styleUrl: './view-threats.component.scss',
 })
 export class ViewThreatsComponent implements OnInit {
   private spinner = inject(NgxSpinnerService);
@@ -22,16 +22,19 @@ export class ViewThreatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.deathThreatService.getThreats().pipe(take(1)).subscribe({
-      next: (threats) => {
-        this.threats = threats;
-        this.spinner.hide();
-      },
-      error: (error) => {
-        console.error(error);
-        this.spinner.hide();
-        this.toastr.error('Please try again later', 'Something went wrong');
-      }
-    })
+    this.deathThreatService
+      .getThreats()
+      .pipe(take(1))
+      .subscribe({
+        next: (threats) => {
+          this.threats = threats;
+          this.spinner.hide();
+        },
+        error: (error) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Please try again later', 'Something went wrong');
+        },
+      });
   }
 }

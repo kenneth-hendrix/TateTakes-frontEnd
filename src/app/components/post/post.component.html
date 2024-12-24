@@ -29,7 +29,14 @@
     }
     <span [innerHTML]="textToShow"></span>
     @if (post.body.length > 700) {
-      <a class="readMore" (click)="expand()" (keydown)="expand()" tabindex="{0}"> Read More</a>
+      <a
+        class="readMore"
+        (click)="expand()"
+        (keydown)="expand()"
+        tabindex="{0}"
+      >
+        Read More</a
+      >
     }
   </div>
   <hr />
@@ -39,6 +46,7 @@
     (keydown)="showComments()"
     tabindex="{0}"
   >
-    {{ commentCount === 0 ? "Leave a comment" : commentCount + " comment" }}{{commentCount > 1 ? 's' : ''}}
+    {{ commentCount === 0 ? "Leave a comment" : commentCount + " comment"
+    }}{{ commentCount > 1 ? "s" : "" }}
   </a>
 </div>

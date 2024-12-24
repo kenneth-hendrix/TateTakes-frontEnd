@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 .header {
   overflow: hidden;
   background-color: $TateTakes-Blue;
@@ -25,10 +25,10 @@
 
 .current {
   color: darken($TateTakes-Orange, 10%);
-    text-decoration: underline;
-    font-weight: 500;
-    margin: 5px;
-    font-size: 20px;
+  text-decoration: underline;
+  font-weight: 500;
+  margin: 5px;
+  font-size: 20px;
 }
 
 .headerContent {
@@ -66,7 +66,7 @@
 
   .second {
     position: static;
-    left: auto ;
+    left: auto;
     right: auto;
     transform: none;
   }
