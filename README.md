@@ -1,27 +1,42 @@
-# TateBlog
+# Tate Takes
+Front end for [Tate Takes](https://tatetakes.com). Relies on [Mailer Lite](https://github.com/kenneth-hendrix/mailerLite-express) for email subscriptions
+## Clone and Install
+```bash
+git clone https://github.com/kenneth-hendrix/TateTakes-frontEnd.git
+cd TateTakes-frontEnd
+npm install
+```
+##  Requirements
+This project uses [Firebase](https://firebase.google.com) for user authentication and Firestore for data storage.
+  1. Create a Firebase project and set up Firebase Authentication and Firestore.
+  2. Store your Firebase connection details in the src/app/environments/ folder.
+  3. Add the development configuration to environment.ts and the production configuration to environment.prod.ts.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Example of environment.ts (development environment):
+```ts
+export const environment = {
+  production: false,
+  firebaseConfig: {
+    apiKey: 'abcdefthijklmnopqrstuvwxyz',
+    authDomain: 'example.firebaseapp.com',
+    projectId: 'example',
+    storageBucket: 'example.appspot.com',
+    messagingSenderId: '1234567890',
+    appId: 'abcdefthijklmnopqrstuvwxyzabcdefthijklmnopqrstuvwxyz',
+  },
+};
+```
+## Commands
+| Command              | Description                                                                           |
+|----------------------|---------------------------------------------------------------------------------------|
+| npm run start        | Start development server                                                              |
+| npm run build        | Build the application for production                                                  |
+| npm run lint         | Runs ESLint on the source code to check for linting errors                            |
+| npm run lint:fix     | Runs ESLint and attempts to automatically fix any linting errors                      |
+| npm run prettier     | Runs Prettier to check if the code in the src folder is formatted                     |
+| npm run prettier:fix | Runs Prettier and automatically formats the code in the src folder                    |
+| npm run format       | Formats the code using Prettier, then runs ESLint to fix any remaining linting issues |
+---
+Notes:
+- Firebase Authentication: If you're using Firebase Authentication, ensure you've configured the sign-in methods (like email/password, Google, etc.) in the Firebase console.
+- Firestore: The app uses Firestore for storing user data or other app-related information. Make sure your Firestore rules are correctly set up in the Firebase console for security.
