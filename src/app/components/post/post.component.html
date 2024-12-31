@@ -1,7 +1,12 @@
 <div class="card" [ngStyle]="{ 'border-color': colors[index % colors.length] }">
-  <h1 class="title">
+  <span
+    class="title hoverable"
+    tabindex="0"
+    (click)="expand()"
+    (keydown)="expand()"
+  >
     {{ post.title }}
-  </h1>
+  </span>
   <p class="date">
     {{ post.date | timestampToDate: "date-only" }}
   </p>
@@ -30,7 +35,7 @@
     <span [innerHTML]="textToShow"></span>
     @if (post.body.length > 700) {
       <a
-        class="readMore"
+        class="readMore hoverable"
         (click)="expand()"
         (keydown)="expand()"
         tabindex="{0}"
@@ -42,6 +47,7 @@
   <hr />
   <a
     id="comments"
+    class="hoverable"
     (click)="showComments()"
     (keydown)="showComments()"
     tabindex="{0}"
