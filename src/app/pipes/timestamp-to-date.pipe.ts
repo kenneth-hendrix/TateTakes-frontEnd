@@ -8,10 +8,11 @@ import { Timestamp } from 'firebase/firestore';
 export class TimestampToDatePipe implements PipeTransform {
   transform(value: Timestamp | Date, format = 'default'): string {
     let date: Date;
-    if (value instanceof Timestamp) {
-      date = value.toDate();
-    } else {
+    if (value instanceof Date) {
       date = value;
+    } else {
+      const timestamp = new Timestamp(value.seconds, value.nanoseconds);
+      date = timestamp.toDate();
     }
 
     switch (format) {
