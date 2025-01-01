@@ -1,4 +1,5 @@
 @import "../../../variables.scss";
+
 .titleContainer,
 .bodyContainer {
   display: flex;
@@ -59,6 +60,40 @@ button {
   color: #fff;
 }
 
+.arrow {
+  position: relative;
+  bottom: 1px;
+  color: $TateTakes-Blue;
+}
+
+.backButton {
+  color: $TateTakes-Blue;
+  margin-bottom: 15px;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+.edit {
+  text-decoration: underline;
+  font-weight: 400;
+  color: $TateTakes-Red;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.title {
+  color: $TateTakes-Blue;
+}
+
 @media only screen and (max-width: 600px) {
   .formContainer {
     margin-left: 0;
@@ -70,4 +105,14 @@ button {
 
 .publishButton {
   float: right;
+}
+
+.deleteButton {
+  float: right;
+  color: $TateTakes-Red;
+  text-decoration: none;
+}
+
+.deleteButton:hover {
+  text-decoration: underline;
 }
