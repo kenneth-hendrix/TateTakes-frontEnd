@@ -1,9 +1,19 @@
 <app-header></app-header>
 <div class="admin-container">
   <mat-tab-group>
+    <mat-tab label="View Threats">
+      <div class="tab-contents">
+        <app-view-threats></app-view-threats>
+      </div>
+    </mat-tab>
     <mat-tab label="New Post">
       <div class="tab-contents">
         <app-new-post></app-new-post>
+      </div>
+    </mat-tab>
+    <mat-tab label="Drafts">
+      <div class="tab-contents">
+        <app-drafts></app-drafts>
       </div>
     </mat-tab>
     <mat-tab label="Edit Post">
@@ -14,11 +24,6 @@
     <mat-tab label="Delete Post">
       <div class="tab-contents">
         <app-delete-post></app-delete-post>
-      </div>
-    </mat-tab>
-    <mat-tab label="View Threats">
-      <div class="tab-contents">
-        <app-view-threats></app-view-threats>
       </div>
     </mat-tab>
   </mat-tab-group>

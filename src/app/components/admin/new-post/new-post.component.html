@@ -113,11 +113,19 @@
       </textarea>
     </div>
     <button
+      (click)="saveDraft($event)"
+      [class.disabled]="!isValidDraft"
+      [disabled]="!isValidDraft"
+    >
+      Save Draft
+    </button>
+    <button
       type="submit"
+      class="publishButton"
       [class.disabled]="!postForm.valid"
       [disabled]="!postForm.valid"
     >
-      Submit
+      Publish
     </button>
   </form>
 </div>
