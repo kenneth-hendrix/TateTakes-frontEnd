@@ -1,4 +1,5 @@
 <div class="formContainer">
+  <span class="autosave">{{ autosaveText }}</span>
   <form [formGroup]="postForm" (ngSubmit)="submitNewPost()">
     <div class="titleContainer">
       <span class="formTitle">
@@ -107,8 +108,8 @@
         placeholder="Type here"
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="4"
-        cdkAutosizeMaxRows="15"
+        cdkAutosizeMinRows="10"
+        cdkAutosizeMaxRows="55"
       >
       </textarea>
     </div>
@@ -122,8 +123,8 @@
     <button
       type="submit"
       class="publishButton"
-      [class.disabled]="!postForm.valid"
-      [disabled]="!postForm.valid"
+      [class.disabled]="!postForm.valid || autosaving"
+      [disabled]="!postForm.valid || !autosaving"
     >
       Publish
     </button>
