@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,8 +18,11 @@ import { DraftsService } from '../../../services/drafts.service';
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.scss',
 })
-export class NewPostComponent {
+export class NewPostComponent implements OnInit {
   postForm: FormGroup;
+  draftId = '';
+  autosaveText = 'Post not saved!';
+  autosaving = false;
 
   private fb = inject(FormBuilder);
   private feedService = inject(FeedService);
@@ -35,6 +38,40 @@ export class NewPostComponent {
     });
   }
 
+  ngOnInit() {
+    setInterval(() => {
+      if (this.isValidDraft) {
+        this.autosaveText = 'Saving...';
+        const { title, image, body } = this.postForm.value;
+        const formattedText = body.replace(/\n/g, '<br>');
+        this.autosaving = true;
+        if (this.draftId === '') {
+          this.draftsService
+            .newDraft(title, formattedText, image)
+            .then((docRef) => {
+              this.draftId = docRef.id;
+              const currentTime = new Date().toLocaleTimeString();
+              this.autosaveText = `Last saved at ${currentTime}`;
+              this.draftsService.draftCreated();
+              this.autosaving = false;
+            });
+        } else {
+          const post = {
+            title: title,
+            image: image,
+            body: formattedText,
+            date: new Date(),
+          };
+          this.draftsService.updateDraft(this.draftId, post).then(() => {
+            const currentTime = new Date().toLocaleTimeString();
+            this.autosaveText = `Last saved at ${currentTime}`;
+            this.autosaving = false;
+          });
+        }
+      }
+    }, 30000);
+  }
+
   submitNewPost() {
     if (this.postForm.valid) {
       this.spinner.show();
@@ -44,6 +81,9 @@ export class NewPostComponent {
         .newPost(title, formattedText, image || '')
         .then(() => {
           this.postForm.reset();
+          this.draftsService.deleteDraft(this.draftId).then(() => {
+            this.autosaveText = 'Post not saved!';
+          });
           this.toastr.success(
             `Your post, ${title}, has been published successfully`,
             'Success',

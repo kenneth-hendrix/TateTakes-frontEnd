@@ -27,7 +27,7 @@ import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
   styleUrl: './drafts.component.scss',
 })
 export class DraftsComponent implements OnInit, OnDestroy {
-  private draftService = inject(DraftsService);
+  private draftsService = inject(DraftsService);
   private fb = inject(FormBuilder);
   private feedService = inject(FeedService);
   private spinner = inject(NgxSpinnerService);
@@ -36,6 +36,8 @@ export class DraftsComponent implements OnInit, OnDestroy {
   drafts: Post[] = [];
   currentDraft: Post | undefined;
   draftForm: FormGroup;
+  autosaveText = 'Draft Saved';
+  autosaving = false;
 
   private $destroy = new Subject<void>();
 
@@ -49,11 +51,35 @@ export class DraftsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDrafts();
-    this.draftService.$draftCreated
+    this.draftsService.$draftCreated
       .pipe(takeUntil(this.$destroy))
       .subscribe(() => {
         this.getDrafts();
       });
+
+    setInterval(() => {
+      if (this.isDraftValid() && this.currentDraft) {
+        this.autosaveText = 'Saving...';
+        const { title, image, body } = this.draftForm.value;
+        const formattedText = body.replace(/\n/g, '<br>');
+        if (this.currentDraft?.id) {
+          const post = {
+            title: title,
+            image: image,
+            body: formattedText,
+            date: new Date(),
+          };
+          this.autosaving = true;
+          this.draftsService
+            .updateDraft(this.currentDraft.id, post)
+            .then(() => {
+              this.autosaving = false;
+              const currentTime = new Date().toLocaleTimeString();
+              this.autosaveText = `Last saved at ${currentTime}`;
+            });
+        }
+      }
+    }, 30000);
   }
 
   ngOnDestroy() {
@@ -63,7 +89,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
 
   getDrafts() {
     this.spinner.show();
-    this.draftService
+    this.draftsService
       .getDrafts()
       .then((drafts) => {
         this.drafts = drafts;
@@ -105,7 +131,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
         image: image,
         date: new Date(),
       };
-      this.draftService
+      this.draftsService
         .updateDraft(this.currentDraft.id, post)
         .then(() => {
           this.toastr.success('Successfully saved draft', 'Success');
@@ -140,10 +166,11 @@ export class DraftsComponent implements OnInit, OnDestroy {
         .newPost(title, formattedText, image)
         .then(() => {
           if (this.currentDraft?.id) {
-            this.draftService
+            this.draftsService
               .deleteDraft(this.currentDraft.id)
               .then(() => {
                 this.toastr.success('Successfully published draft', 'Success');
+                this.autosaveText = 'Draft Saved';
               })
               .catch((err) => {
                 this.spinner.hide();
@@ -170,7 +197,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
   deleteDraft() {
     if (this.currentDraft?.id) {
       this.spinner.show();
-      this.draftService
+      this.draftsService
         .deleteDraft(this.currentDraft.id)
         .then(() => {
           this.toastr.success('Successfully deleted draft', 'Success');

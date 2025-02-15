@@ -48,6 +48,8 @@
       >
         Delete Draft
       </a>
+      <br />
+      <div class="autosave">{{ autosaveText }}</div>
       <form [formGroup]="draftForm" (ngSubmit)="submitEditDraft()">
         <div class="titleContainer">
           <span class="formTitle">
@@ -156,8 +158,8 @@
             placeholder="Type here"
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="4"
-            cdkAutosizeMaxRows="15"
+            cdkAutosizeMinRows="10"
+            cdkAutosizeMaxRows="55"
           >
           </textarea>
         </div>
@@ -171,8 +173,8 @@
         <span class="spacer"></span>
         <button
           class="publishButton"
-          [class.disabled]="!draftForm.valid"
-          [disabled]="!draftForm.valid"
+          [class.disabled]="!draftForm.valid || autosaving"
+          [disabled]="!draftForm.valid || autosaving"
           (click)="publishDraft($event)"
         >
           Publish Take
