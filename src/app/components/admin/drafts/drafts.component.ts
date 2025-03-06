@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
+import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-drafts',
@@ -32,12 +33,15 @@ export class DraftsComponent implements OnInit, OnDestroy {
   private feedService = inject(FeedService);
   private spinner = inject(NgxSpinnerService);
   private toastr = inject(ToastrService);
+  private uploadService = inject(UploadService);
 
   drafts: Post[] = [];
   currentDraft: Post | undefined;
   draftForm: FormGroup;
   autosaveText = 'Draft Saved';
   autosaving = false;
+  selectedFile: File | null = null;
+  imageUrl = '';
 
   private $destroy = new Subject<void>();
 
@@ -60,12 +64,12 @@ export class DraftsComponent implements OnInit, OnDestroy {
     setInterval(() => {
       if (this.isDraftValid() && this.currentDraft) {
         this.autosaveText = 'Saving...';
-        const { title, image, body } = this.draftForm.value;
+        const { title, body } = this.draftForm.value;
         const formattedText = body.replace(/\n/g, '<br>');
         if (this.currentDraft?.id) {
           const post = {
             title: title,
-            image: image,
+            image: this.imageUrl,
             body: formattedText,
             date: new Date(),
           };
@@ -85,6 +89,22 @@ export class DraftsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.$destroy.next();
     this.$destroy.complete();
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.selectedFile = input.files[0];
+
+      this.spinner.show();
+
+      this.uploadService.uploadImages(this.selectedFile).subscribe((res) => {
+        if (res.success) {
+          this.imageUrl = res.imageUrl;
+        }
+        this.spinner.hide();
+      });
+    }
   }
 
   getDrafts() {
@@ -109,7 +129,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
     this.draftForm
       .get('body')
       ?.setValue(draft.body.replace(/<br\s*\/?>/gi, '\n'));
-    this.draftForm.get('image')?.setValue(draft.image);
+    this.imageUrl = draft.image || '';
   }
 
   closeDraft() {
@@ -123,12 +143,12 @@ export class DraftsComponent implements OnInit, OnDestroy {
   submitEditDraft() {
     if (this.draftForm.valid && this.currentDraft?.id) {
       this.spinner.show();
-      const { title, image, body } = this.draftForm.value;
+      const { title, body } = this.draftForm.value;
       const formattedText: string = body.replace(/\n/g, '<br>');
       const post: Post = {
         title: title,
         body: formattedText,
-        image: image,
+        image: this.imageUrl,
         date: new Date(),
       };
       this.draftsService
@@ -145,14 +165,15 @@ export class DraftsComponent implements OnInit, OnDestroy {
         })
         .finally(() => {
           this.closeDraft();
+          this.imageUrl = '';
           this.getDrafts();
         });
     }
   }
 
   isDraftValid(): boolean {
-    const { title, image, body } = this.draftForm.value;
-    return title || body || image;
+    const { title, body } = this.draftForm.value;
+    return title || body || this.imageUrl;
   }
 
   publishDraft(event: MouseEvent) {
@@ -160,10 +181,10 @@ export class DraftsComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     if (this.draftForm.valid && this.currentDraft?.id) {
       this.spinner.show();
-      const { title, image, body } = this.draftForm.value;
+      const { title, body } = this.draftForm.value;
       const formattedText = body.replace(/\n/g, '<br>');
       this.feedService
-        .newPost(title, formattedText, image)
+        .newPost(title, formattedText, this.imageUrl)
         .then(() => {
           if (this.currentDraft?.id) {
             this.draftsService
@@ -182,6 +203,7 @@ export class DraftsComponent implements OnInit, OnDestroy {
               })
               .finally(() => {
                 this.closeDraft();
+                this.imageUrl = '';
                 this.getDrafts();
               });
           }

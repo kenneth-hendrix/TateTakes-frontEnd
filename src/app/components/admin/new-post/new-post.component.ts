@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { DraftsService } from '../../../services/drafts.service';
+import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-new-post',
@@ -19,16 +20,19 @@ import { DraftsService } from '../../../services/drafts.service';
   styleUrl: './new-post.component.scss',
 })
 export class NewPostComponent implements OnInit {
-  postForm: FormGroup;
-  draftId = '';
-  autosaveText = 'Post not saved!';
-  autosaving = false;
-
   private fb = inject(FormBuilder);
   private feedService = inject(FeedService);
   private toastr = inject(ToastrService);
   private spinner = inject(NgxSpinnerService);
   private draftsService = inject(DraftsService);
+  private uploadService = inject(UploadService);
+
+  postForm: FormGroup;
+  draftId = '';
+  autosaveText = 'Post not saved!';
+  autosaving = false;
+  selectedFile: File | null = null;
+  imageUrl = '';
 
   constructor() {
     this.postForm = this.fb.group({
@@ -42,12 +46,12 @@ export class NewPostComponent implements OnInit {
     setInterval(() => {
       if (this.isValidDraft) {
         this.autosaveText = 'Saving...';
-        const { title, image, body } = this.postForm.value;
+        const { title, body } = this.postForm.value;
         const formattedText = body.replace(/\n/g, '<br>');
         this.autosaving = true;
         if (this.draftId === '') {
           this.draftsService
-            .newDraft(title, formattedText, image)
+            .newDraft(title, formattedText, this.imageUrl)
             .then((docRef) => {
               this.draftId = docRef.id;
               const currentTime = new Date().toLocaleTimeString();
@@ -58,7 +62,7 @@ export class NewPostComponent implements OnInit {
         } else {
           const post = {
             title: title,
-            image: image,
+            image: this.imageUrl,
             body: formattedText,
             date: new Date(),
           };
@@ -72,15 +76,32 @@ export class NewPostComponent implements OnInit {
     }, 30000);
   }
 
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.selectedFile = input.files[0];
+
+      this.spinner.show();
+
+      this.uploadService.uploadImages(this.selectedFile).subscribe((res) => {
+        if (res.success) {
+          this.imageUrl = res.imageUrl;
+        }
+        this.spinner.hide();
+      });
+    }
+  }
+
   submitNewPost() {
     if (this.postForm.valid) {
       this.spinner.show();
-      const { title, image, body } = this.postForm.value;
+      const { title, body } = this.postForm.value;
       const formattedText = body.replace(/\n/g, '<br>');
       this.feedService
-        .newPost(title, formattedText, image || '')
+        .newPost(title, formattedText, this.imageUrl)
         .then(() => {
           this.postForm.reset();
+          this.imageUrl = '';
           this.draftsService.deleteDraft(this.draftId).then(() => {
             this.autosaveText = 'Post not saved!';
           });
@@ -103,12 +124,13 @@ export class NewPostComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.spinner.show();
-    const { title, image, body } = this.postForm.value;
+    const { title, body } = this.postForm.value;
     const formattedText = body.replace(/\n/g, '<br>');
     this.draftsService
-      .newDraft(title, formattedText, image || '')
+      .newDraft(title, formattedText, this.imageUrl)
       .then(() => {
         this.postForm.reset();
+        this.imageUrl = '';
         this.toastr.success(`Your draft was saved successfully`, 'Success');
         this.draftsService.draftCreated();
       })
@@ -122,7 +144,7 @@ export class NewPostComponent implements OnInit {
   }
 
   get isValidDraft(): boolean {
-    const { title, image, body } = this.postForm.value;
-    return title || image || body;
+    const { title, body } = this.postForm.value;
+    return title || this.imageUrl || body;
   }
 }
