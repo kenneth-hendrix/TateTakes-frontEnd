@@ -14,7 +14,6 @@ import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-new-post',
-  standalone: true,
   imports: [ReactiveFormsModule, TextFieldModule],
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.scss',

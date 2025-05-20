@@ -14,7 +14,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-death-threats',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     HeaderComponent,

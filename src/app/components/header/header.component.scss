@@ -1,4 +1,6 @@
-@import "../../variables.scss";
+@use "../../variables.scss" as *;
+@use "sass:color";
+
 .header {
   overflow: hidden;
   background-color: $TateTakes-Blue;
@@ -17,14 +19,14 @@
   font-size: 20px;
 
   &:hover {
-    color: darken($TateTakes-Orange, 10%);
+    color: color.adjust($TateTakes-Orange, $lightness: -10%);
     text-decoration: underline;
     font-weight: 500;
   }
 }
 
 .current {
-  color: darken($TateTakes-Orange, 10%);
+  color: color.adjust($TateTakes-Orange, $lightness: -10%);
   text-decoration: underline;
   font-weight: 500;
   margin: 5px;

@@ -8,7 +8,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-delete-post',
-  standalone: true,
   imports: [TimestampToDatePipe],
   templateUrl: './delete-post.component.html',
   styleUrl: './delete-post.component.scss',

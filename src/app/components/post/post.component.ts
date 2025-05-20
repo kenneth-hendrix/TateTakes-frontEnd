@@ -15,7 +15,6 @@ import { CommentService } from '../../services/comment.service';
 
 @Component({
   selector: 'app-post',
-  standalone: true,
   imports: [TimestampToDatePipe, CommonModule],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

@@ -16,7 +16,6 @@ import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-edit-post',
-  standalone: true,
   imports: [TimestampToDatePipe, ReactiveFormsModule, TextFieldModule],
   templateUrl: './edit-post.component.html',
   styleUrl: './edit-post.component.scss',

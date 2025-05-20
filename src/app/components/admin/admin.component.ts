@@ -10,7 +10,6 @@ import { DraftsComponent } from './drafts/drafts.component';
 
 @Component({
   selector: 'app-admin',
-  standalone: true,
   imports: [
     HeaderComponent,
     ReactiveFormsModule,

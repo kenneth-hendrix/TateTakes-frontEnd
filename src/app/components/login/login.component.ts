@@ -15,7 +15,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [ReactiveFormsModule, HeaderComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

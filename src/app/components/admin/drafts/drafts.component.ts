@@ -17,7 +17,6 @@ import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-drafts',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     TextFieldModule,

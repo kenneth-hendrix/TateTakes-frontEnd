@@ -20,7 +20,6 @@ import { HeaderComponent } from '../../header/header.component';
 
 @Component({
   selector: 'app-expanded-post',
-  standalone: true,
   imports: [
     TimestampToDatePipe,
     ReactiveFormsModule,

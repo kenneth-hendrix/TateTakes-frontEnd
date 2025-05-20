@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
-  standalone: true,
   imports: [HeaderComponent, PostComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',

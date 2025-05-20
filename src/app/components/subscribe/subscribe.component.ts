@@ -13,7 +13,6 @@ import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-subscribe',
-  standalone: true,
   imports: [ReactiveFormsModule, HeaderComponent],
   templateUrl: './subscribe.component.html',
   styleUrl: './subscribe.component.scss',
