@@ -14,10 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-    selector: 'app-login',
-    imports: [ReactiveFormsModule, HeaderComponent],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+  selector: 'app-login',
+  imports: [ReactiveFormsModule, HeaderComponent],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);

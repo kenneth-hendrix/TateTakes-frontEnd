@@ -19,16 +19,16 @@ import { FeedService } from '../../../services/feed.service';
 import { HeaderComponent } from '../../header/header.component';
 
 @Component({
-    selector: 'app-expanded-post',
-    imports: [
-        TimestampToDatePipe,
-        ReactiveFormsModule,
-        CommonModule,
-        TextFieldModule,
-        HeaderComponent,
-    ],
-    templateUrl: './expanded-post.component.html',
-    styleUrl: './expanded-post.component.scss'
+  selector: 'app-expanded-post',
+  imports: [
+    TimestampToDatePipe,
+    ReactiveFormsModule,
+    CommonModule,
+    TextFieldModule,
+    HeaderComponent,
+  ],
+  templateUrl: './expanded-post.component.html',
+  styleUrl: './expanded-post.component.scss',
 })
 export class ExpandedPostComponent {
   commentForm: FormGroup;

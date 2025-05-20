@@ -14,10 +14,10 @@ import { CommonModule } from '@angular/common';
 import { CommentService } from '../../services/comment.service';
 
 @Component({
-    selector: 'app-post',
-    imports: [TimestampToDatePipe, CommonModule],
-    templateUrl: './post.component.html',
-    styleUrl: './post.component.scss'
+  selector: 'app-post',
+  imports: [TimestampToDatePipe, CommonModule],
+  templateUrl: './post.component.html',
+  styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
   @Input({ required: true }) post!: Post;
