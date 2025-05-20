@@ -13,11 +13,10 @@ import { DraftsService } from '../../../services/drafts.service';
 import { UploadService } from '../../../services/upload.service';
 
 @Component({
-  selector: 'app-new-post',
-  standalone: true,
-  imports: [ReactiveFormsModule, TextFieldModule],
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.scss',
+    selector: 'app-new-post',
+    imports: [ReactiveFormsModule, TextFieldModule],
+    templateUrl: './new-post.component.html',
+    styleUrl: './new-post.component.scss'
 })
 export class NewPostComponent implements OnInit {
   private fb = inject(FormBuilder);

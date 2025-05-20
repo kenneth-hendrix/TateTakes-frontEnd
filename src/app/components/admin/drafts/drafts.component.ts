@@ -16,16 +16,15 @@ import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 import { UploadService } from '../../../services/upload.service';
 
 @Component({
-  selector: 'app-drafts',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    TextFieldModule,
-    ReactiveFormsModule,
-    TimestampToDatePipe,
-  ],
-  templateUrl: './drafts.component.html',
-  styleUrl: './drafts.component.scss',
+    selector: 'app-drafts',
+    imports: [
+        ReactiveFormsModule,
+        TextFieldModule,
+        ReactiveFormsModule,
+        TimestampToDatePipe,
+    ],
+    templateUrl: './drafts.component.html',
+    styleUrl: './drafts.component.scss'
 })
 export class DraftsComponent implements OnInit, OnDestroy {
   private draftsService = inject(DraftsService);

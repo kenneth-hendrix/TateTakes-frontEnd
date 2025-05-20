@@ -12,11 +12,10 @@ import { take } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 
 @Component({
-  selector: 'app-subscribe',
-  standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent],
-  templateUrl: './subscribe.component.html',
-  styleUrl: './subscribe.component.scss',
+    selector: 'app-subscribe',
+    imports: [ReactiveFormsModule, HeaderComponent],
+    templateUrl: './subscribe.component.html',
+    styleUrl: './subscribe.component.scss'
 })
 export class SubscribeComponent {
   private mailerService = inject(MailerService);

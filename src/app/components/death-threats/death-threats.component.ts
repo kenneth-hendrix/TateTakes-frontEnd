@@ -13,16 +13,15 @@ import { CommonModule } from '@angular/common';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
-  selector: 'app-death-threats',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    HeaderComponent,
-    CommonModule,
-    TextFieldModule,
-  ],
-  templateUrl: './death-threats.component.html',
-  styleUrl: './death-threats.component.scss',
+    selector: 'app-death-threats',
+    imports: [
+        ReactiveFormsModule,
+        HeaderComponent,
+        CommonModule,
+        TextFieldModule,
+    ],
+    templateUrl: './death-threats.component.html',
+    styleUrl: './death-threats.component.scss'
 })
 export class DeathThreatsComponent {
   threatForm: FormGroup;

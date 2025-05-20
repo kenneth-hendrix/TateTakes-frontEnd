@@ -7,11 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-delete-post',
-  standalone: true,
-  imports: [TimestampToDatePipe],
-  templateUrl: './delete-post.component.html',
-  styleUrl: './delete-post.component.scss',
+    selector: 'app-delete-post',
+    imports: [TimestampToDatePipe],
+    templateUrl: './delete-post.component.html',
+    styleUrl: './delete-post.component.scss'
 })
 export class DeletePostComponent implements OnInit {
   private feedService = inject(FeedService);

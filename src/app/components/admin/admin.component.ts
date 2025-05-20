@@ -9,19 +9,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DraftsComponent } from './drafts/drafts.component';
 
 @Component({
-  selector: 'app-admin',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    ReactiveFormsModule,
-    NewPostComponent,
-    EditPostComponent,
-    DeletePostComponent,
-    ViewThreatsComponent,
-    MatTabsModule,
-    DraftsComponent,
-  ],
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss',
+    selector: 'app-admin',
+    imports: [
+        HeaderComponent,
+        ReactiveFormsModule,
+        NewPostComponent,
+        EditPostComponent,
+        DeletePostComponent,
+        ViewThreatsComponent,
+        MatTabsModule,
+        DraftsComponent,
+    ],
+    templateUrl: './admin.component.html',
+    styleUrl: './admin.component.scss'
 })
 export class AdminComponent {}

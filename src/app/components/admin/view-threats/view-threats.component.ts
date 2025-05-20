@@ -7,11 +7,10 @@ import { take } from 'rxjs';
 import { TimestampToDatePipe } from '../../../pipes/timestamp-to-date.pipe';
 
 @Component({
-  selector: 'app-view-threats',
-  standalone: true,
-  imports: [TimestampToDatePipe],
-  templateUrl: './view-threats.component.html',
-  styleUrl: './view-threats.component.scss',
+    selector: 'app-view-threats',
+    imports: [TimestampToDatePipe],
+    templateUrl: './view-threats.component.html',
+    styleUrl: './view-threats.component.scss'
 })
 export class ViewThreatsComponent implements OnInit {
   private spinner = inject(NgxSpinnerService);

@@ -15,11 +15,10 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { UploadService } from '../../../services/upload.service';
 
 @Component({
-  selector: 'app-edit-post',
-  standalone: true,
-  imports: [TimestampToDatePipe, ReactiveFormsModule, TextFieldModule],
-  templateUrl: './edit-post.component.html',
-  styleUrl: './edit-post.component.scss',
+    selector: 'app-edit-post',
+    imports: [TimestampToDatePipe, ReactiveFormsModule, TextFieldModule],
+    templateUrl: './edit-post.component.html',
+    styleUrl: './edit-post.component.scss'
 })
 export class EditPostComponent implements OnInit {
   private feedService = inject(FeedService);

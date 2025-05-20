@@ -8,11 +8,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-feed',
-  standalone: true,
-  imports: [HeaderComponent, PostComponent],
-  templateUrl: './feed.component.html',
-  styleUrl: './feed.component.scss',
+    selector: 'app-feed',
+    imports: [HeaderComponent, PostComponent],
+    templateUrl: './feed.component.html',
+    styleUrl: './feed.component.scss'
 })
 export class FeedComponent implements OnInit, OnDestroy {
   private feedService = inject(FeedService);
