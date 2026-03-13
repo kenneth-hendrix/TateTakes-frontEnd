@@ -1,9 +1,21 @@
-<div class="header">
-  <div class="second">
-    <a (click)="goHome()" tabindex="{0}" (keydown)="goHome()">
+<header class="header">
+  <div class="header-inner">
+    <div class="nav-left">
+      @if (currentPage !== PAGES.DeathThreats) {
+        <a
+          class="nav-link active"
+          (click)="threaten()"
+          tabindex="0"
+          (keydown)="threaten()"
+          >Send Death Threats to Author</a
+        >
+      } @else {
+        <span class="nav-link current">Send Death Threats to Author</span>
+      }
+    </div>
+
+    <a class="logo-link" (click)="goHome()" tabindex="0" (keydown)="goHome()">
       <svg
-        width="295.50635"
-        height="64"
         viewBox="24.179993 13.380005 295.50635 64"
         preserveAspectRatio="xMidYMid"
         id="svg6"
@@ -125,50 +137,45 @@
         </style>
       </svg>
     </a>
-  </div>
-  <div class="headerContent">
-    <div class="first">
-      @if (currentPage !== PAGES.DeathThreats) {
-        <a
-          class="active"
-          (click)="threaten()"
-          tabindex="{0}"
-          (keydown)="threaten()"
-          >Send Death Threats to Author</a
-        >
-      } @else {
-        <p class="current">Send Death Threats to Author</p>
-      }
-    </div>
 
-    <div class="third">
-      <!--      TODO subscribe link styling-->
+    <div class="nav-right">
       <a
-        class="active"
-        id="subLink"
+        class="nav-link active"
         (click)="subscribe()"
-        tabindex="{0}"
+        tabindex="0"
         (keydown)="subscribe()"
         >Subscribe</a
       >
       @if (isAuthenticated && currentPage !== PAGES.Admin) {
-        <a class="active" (click)="admin()" tabindex="{0}" (keydown)="admin()"
+        <a
+          class="nav-link active"
+          (click)="admin()"
+          tabindex="0"
+          (keydown)="admin()"
           >Admin</a
         >
       } @else if (isAuthenticated && currentPage === PAGES.Admin) {
-        <a class="current">Admin</a>
+        <span class="nav-link current">Admin</span>
       }
       @if (isAuthenticated) {
-        <a class="active" (click)="logout()" (keydown)="logout()" tabindex="{0}"
+        <a
+          class="nav-link active"
+          (click)="logout()"
+          tabindex="0"
+          (keydown)="logout()"
           >Log Out</a
         >
       } @else if (!isAuthenticated && currentPage !== PAGES.Login) {
-        <a class="active" (click)="login()" (keydown)="login()" tabindex="{0}"
+        <a
+          class="nav-link active"
+          (click)="login()"
+          tabindex="0"
+          (keydown)="login()"
           >Log In</a
         >
       } @else if (!isAuthenticated && currentPage === PAGES.Login) {
-        <a class="current">Log In</a>
+        <span class="nav-link current">Log In</span>
       }
     </div>
   </div>
-</div>
+</header>
